@@ -1,6 +1,7 @@
+export DOTFILES_DIR="$HOME/.dotfiles"
 test -e "$HOME/.colorsrc" && source "$HOME/.colorsrc"
-test -e "$HOME/.bashrc" && source "$HOME/.bashrc"
-test -e "$HOME/.secretsrc" && source "$HOME/.secretsrc"
+test -e "$DOTFILES_DIR/.bashrc" && source "$DOTFILES_DIR/.bashrc"
+test -e "$DOTFILES_DIR/.secretsrc" && source "$DOTFILES_DIR/.secretsrc"
 
 export PATH=/usr/local/bin:$PATH
 export PATH="/usr/local/opt/libpq/bin:$PATH"
@@ -55,11 +56,25 @@ alias dj='BUNDLE_GEMFILE=~/Code/dajoku-cli/Gemfile bundle exec ruby -I ~/Code/da
 alias dj-api='cd ~/Code/dajoku-api'
 alias dj-backend='cd ~/Code/dajoku-backend-status'
 alias dj-cli='cd ~/Code/dajoku-cli'
-alias dj-debug='dj-api && DEBUG=true $1'
-alias dj-le="local/exec $1"
-alias dj-login='dj-api && dajoku auth login -s local --duo-otp skip'
+alias dj-deploy-local='dj-login && dj deploy -s local -e local --no-follow'
+alias dj-le="dj-api && local/exec $1"
 alias dj-rails="dj-api && local/exec rails $1"
 alias dj-status='dj-backend && dajoku component list -s local -e local --live'
+
+function dj-sample {
+  command=$1;
+  shift;
+
+  dj "$command" -s local -a dajoku-sample-app "$@"
+}
+function dj-login {
+  if [ "$1" == "dev-staging" ];
+  then
+    dj-api && dajoku auth login -s dev-staging
+  else
+    dj-api && dajoku auth login -s local --duo-otp skip
+  fi
+}
 
 # Pass in PR URL
 function dj-integration-test {
