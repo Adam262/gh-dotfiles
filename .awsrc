@@ -1,0 +1,54 @@
+# use via aws-vault exec support <my command> 
+
+export AWS_PROFILE="support"
+export AWS_REGION='us-east-1'
+export AWS_VAULT_BACKEND=file
+
+aws-vault-use   () {
+  unset AWS_VAULT
+  eval $(aws-vault exec -d 24h "$@" -- env \
+    | awk '/^AWS/ { print "export " $1 }')
+}
+
+alias aws-sup='aws-vault-use support'
+alias aws-kill-session='aws-vault remove -s support'
+
+aws-set-ssm () { 
+  local name value region;
+  name="$1";
+  value="$2";
+  region="${3:-'us-east-1'}";
+  
+  aws ssm put-parameter --name "$name" --type SecureString --value "$value" --region "$region" --overwrite
+}
+
+aws-get-ssm () { 
+  local name region;
+  name="$1";
+  region="${2:-"us-east-1"}";
+  aws ssm get-parameter --name "$name" --region "$region" --with-decryption
+}
+
+aws-copy-ssm () {
+  local name region;
+  name="$1"
+  region="$2"
+
+  # jq -r is needed for raw string output
+  aws-get-ssm $name $region | jq -r '.Parameter.Value' | pbcopy
+}
+
+aws-paste-ssm() {
+  local name region;
+  name="$1"
+  region="$2"
+
+  # quotes around subshell make sure all whitespace gets preserved as-is
+  aws-set-ssm $name "$(pbpaste)" $region --overwrite  
+}
+
+aws-console () {
+  path="${1:-"iam"}";
+
+  aws-vault login support-admin --path=$path
+}
