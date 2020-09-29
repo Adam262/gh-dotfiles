@@ -1,0 +1,23 @@
+prompt_order=["username", "directory", "aws", "kubernetes", "git_branch", "character", "line_break"]
+
+[username]
+show_always = true
+style = "fg:190"
+
+[directory]
+prefix = ""
+truncate_to_repo = false
+style = "fg:110"
+
+[aws]
+symbol = "aws:"
+style = "fg:110"
+
+[kubernetes]
+symbol = "k:"
+disabled = false
+style = "fg:190"
+
+[git_branch]
+symbol = ""
+style = "fg:190"
