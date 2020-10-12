@@ -9,7 +9,7 @@ test -e "$HOME/.asdf/completions/asdf.bash" && source "$HOME/.asdf/completions/a
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-unsetopt correct_all
+unsetopt correct_all correct
 setopt autocd autopushd
 setopt NO_CASE_GLOB
 
@@ -19,8 +19,8 @@ HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 SAVEHIST=5000
 HISTSIZE=2000
 unsetopt share_history
+unsetopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
-setopt INC_APPEND_HISTORY
 
 source /usr/local/share/antigen/antigen.zsh
 
@@ -63,22 +63,6 @@ export UNICORN_TIMEOUT=1000
  
 alias dj='BUNDLE_GEMFILE=~/Code/dajoku_cli/Gemfile bundle exec ruby -I ~/Code/dajoku_cli/lib ~/Code/dajoku_cli/bin/dajoku'
 alias le="local/exec $1"
-
-dal() {
-  dajoku auth login -s "$1" -r "$2"
-}
-
-dal-local() {
-  dajoku auth login -s local --duo-otp skip
-}
-
-dajoku_auth() { 
-  dal-local
-  dal dev use1
-  dal dev usw2
-  dal prod use1
-  dal prod usw2
-}
  
 # Pass in PR URL
 function dj-integration-test {
@@ -124,6 +108,7 @@ alias pboard_reset="ps aux | grep pboard | grep -v grep | awk '{ print $2 }' | x
 
 eval "$(pipelinectl completion zsh)"
 eval "$(starship init zsh)"
+eval "$(direnv hook zsh)"
 
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
