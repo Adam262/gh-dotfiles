@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e -o pipefail
+[[ -n "${DEBUG:-}" ]] && set -x
+
+export DOTFILES_DIR="$HOME/.dotfiles"
+
+# Write symlinks to home directory
+
+ln -sfv "$DOTFILES_DIR/.editorconfig" ~
+ln -sfv "$DOTFILES_DIR/.gitconfig" ~
+ln -sfv "$DOTFILES_DIR/.gitignore" ~
+ln -sfv "$DOTFILES_DIR/.zshrc" ~
+
+DEBUG=$DEBUG ./scripts/brew_install

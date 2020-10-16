@@ -1,12 +1,8 @@
 export DOTFILES_DIR="$HOME/.dotfiles"
 test -e "$DOTFILES_DIR/.awsrc" && source "$DOTFILES_DIR/.awsrc"
 test -e "$DOTFILES_DIR/.secretsrc" && source "$DOTFILES_DIR/.secretsrc"
-test -e "$DOTFILES_DIR/.releases" && source "$DOTFILES_DIR/.releases"
 
 test -e "$HOME/.autojump/etc/profile.d/autojump.sh"  && source "$HOME/.autojump/etc/profile.d/autojump.sh"
-test -e "$HOME/.asdf/asdf.sh" && source "$HOME/.asdf/asdf.sh"
-test -e "$HOME/.asdf/completions/asdf.bash" && source "$HOME/.asdf/completions/asdf.bash"
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 unsetopt correct_all correct
@@ -33,7 +29,8 @@ antigen bundles <<EOBUNDLES
   history
   git
   kubectl
-	zsh-users/zsh-syntax-highlighting
+  zsh-users/zsh-syntax-highlighting
+  kiurchv/asdf.plugin.zsh
 EOBUNDLES
 
 # Tell Antigen that you're done.

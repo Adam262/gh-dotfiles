@@ -21,6 +21,7 @@ brew "homebrew/portable-ruby/portable-readline"
 brew "homebrew/portable-ruby/portable-ruby"
 brew "raggi/ale/openssl-osx-ca"
 cask "aws-vault"
+cask "docker"
 cask "font-agave-nerd-font"
 cask "google-cloud-sdk"
 mas "Xcode", id: 497799835
