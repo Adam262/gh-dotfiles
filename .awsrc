@@ -12,6 +12,7 @@ aws-vault-use   () {
 
 alias aws-sup='aws-vault-use support'
 alias aws-kill-session='aws-vault remove -s support'
+alias aws-get-user-keys='AWS_VAULT="" aws-vault exec support --no-session env | grep AWS'
 
 aws-set-ssm () { 
   local name value region;

@@ -28,12 +28,12 @@ source /usr/local/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 
 antigen bundles <<EOBUNDLES
-  # command-not-found
-  # docker
-  # history
-  # git
-  # kubectl
-	# zsh-users/zsh-syntax-highlighting
+  command-not-found
+  docker
+  history
+  git
+  kubectl
+	zsh-users/zsh-syntax-highlighting
 EOBUNDLES
 
 # Tell Antigen that you're done.
