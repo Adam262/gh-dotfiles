@@ -12,4 +12,4 @@ ln -sfv "$DOTFILES_DIR/.gitconfig" ~
 ln -sfv "$DOTFILES_DIR/.gitignore" ~
 ln -sfv "$DOTFILES_DIR/.zshrc" ~
 
-DEBUG=$DEBUG ./scripts/brew_install
+DEBUG=$DEBUG "$DOTFILES_DIR/scripts/brew_install"

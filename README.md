@@ -9,7 +9,7 @@ The install script will:
 
 * install the Homebrew package manager
 * install the Xcode CLI
-* create symlinks in your `$HOME` directory for several config files. Make sure you do not already have these files in your `$HOME` directory - the script will raise an error when trying to write link.
+* create symlinks in your `$HOME` directory for the below config files. The script will overwrite any existing files or symlinks  in your `$HOME` directory.
   
   ** `.editorconfig`
   ** `.gitconfig`
