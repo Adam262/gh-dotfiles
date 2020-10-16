@@ -1,43 +1,38 @@
 #!/bin/bash
 # Based on https://openfolder.sh/macos-migrations-with-brewfile
 
-set -e -o pipefail
+set -eo pipefail
 [[ -n "${DEBUG:-}" ]] && set -x
 
 # Check for Homebrew installed
-which -s brew
-if [[ $? != 0 ]] ; then
-	ls -l /Library/Developer/CommandLineTools
-	
-	# Check for xcode-select CLI installed
-	if [[ $? != 0 ]] ; then
-		echo "Installing xcode-select command line tools..."
-		xcode-select --install
-	else
-		echo "xcode-select command line tools installed. Installing Homebrew..."
-		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	fi
-else
+if command -v brew > /dev/null 2>&1 ; then
 	echo "Homebrew already installed. Fetching newest version of Homebrew..."
 	brew update
+else	
+	# Check for xcode-select CLI installed
+	if ls -l /Library/Developer/CommandLineTools > /dev/null 2>&1 ; then
+		echo "xcode-select command line tools installed. installing Homebrew..."
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	else
+		echo "Installing xcode-select command line tools..."
+		xcode-select --install
+	fi
 fi
 
 # Check for homebrew/cask
-brew tap | grep "^homebrew/cask$"
-if [[ $? != 0 ]] ; then
+if brew tap | grep "^homebrew/cask$" > /dev/null 2>&1 ; then 
+	echo "Homebrew Cask already installed"
+else
 	echo "Installing Homebrew Cask..."
 	brew tap homebrew/cask
-else
-	echo "Homebrew Cask already installed"
 fi
 
 # Check for Mac App Store CLI
-brew info mas > /dev/null
-if [[ $? != 0 ]] ; then
+if brew info mas > /dev/null 2>&1 ; then
+	echo "Max App Store CLI already installed"
+else
 	echo "Installing Max App Store CLI..."
 	brew install mas
-else
-	echo "Max App Store CLI already installed"
 fi
 
 # brew install formulae
