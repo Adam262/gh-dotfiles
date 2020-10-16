@@ -23,7 +23,7 @@
 [rerere]
 	enabled = true
 [core]
-	excludesfile = /Users/adambarcan1/.gitignore_global
+	excludesfile = /Users/adambarcan1/.gitignore
 	editor = /usr/bin/vim
 [init]
 	templateDir = /Users/adam/.git-templates
