@@ -1,11 +1,18 @@
-prompt_order=["username", "directory", "aws", "kubernetes", "git_branch", "character", "line_break"]
+format= """\
+	$username\
+	$directory\
+	$aws\
+	$kubernetes\
+	$git_branch\
+	$character\
+	$line_break\
+"""
 
 [username]
 show_always = true
 style = "fg:190"
 
 [directory]
-prefix = ""
 truncate_to_repo = false
 style = "fg:110"
 
@@ -14,7 +21,7 @@ symbol = "aws:"
 style = "fg:110"
 
 [kubernetes]
-symbol = "k:"
+symbol = "k8s:"
 disabled = false
 style = "fg:190"
 
