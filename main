@@ -7,9 +7,19 @@ export DOTFILES_DIR="$HOME/.dotfiles"
 
 # Write symlinks to home directory
 
-ln -sfv "$DOTFILES_DIR/.editorconfig" ~
-ln -sfv "$DOTFILES_DIR/.gitconfig" ~
-ln -sfv "$DOTFILES_DIR/.gitignore" ~
-ln -sfv "$DOTFILES_DIR/.zshrc" ~
+echo "Symlinking dotfiles to home directory. This may overwrite your existing '.zshrc' and other dotfiles. Do you wish to proceed? (y/n)"
+read response
+
+if [[ "$response" == "y" || "$response" == "Y" ]]; then
+	echo "Symlinking dotfiles to home directory."
+	
+	ln -sfv "$DOTFILES_DIR/.editorconfig" ~
+	ln -sfv "$DOTFILES_DIR/.gitconfig" ~
+	ln -sfv "$DOTFILES_DIR/.gitignore" ~
+	ln -sfv "$DOTFILES_DIR/.zshrc" ~
+else
+	echo "Aborting. No changes made to your home directory"
+	exit 0
+fi;
 
 DEBUG=$DEBUG "$DOTFILES_DIR/scripts/brew_install"

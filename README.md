@@ -9,7 +9,7 @@ The install script will:
 
 * install the Homebrew package manager
 * install the Xcode CLI
-* create symlinks in your `$HOME` directory for the below config files. The script will overwrite any existing files or symlinks  in your `$HOME` directory.
+* create symlinks in your `$HOME` directory for the below config files. The script will overwrite any existing files or symlinks in your `$HOME` directory.
   
   ** `.editorconfig`
   ** `.gitconfig`
@@ -20,3 +20,9 @@ The install script will:
 
 ### Installed Formulae, Casks and Mac App Store Applications
 * See Brewfile
+
+### To Do
+
+* Generate `.gitconfig` via script so my creds are not hard coded
+* Allow multiple Brewfiles with a common ancestor
+* Prompt to generate or lookup SSH config
