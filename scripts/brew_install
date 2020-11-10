@@ -29,7 +29,7 @@ fi
 
 # Check for Mac App Store CLI
 if brew info mas > /dev/null 2>&1 ; then
-	echo "Max App Store CLI already installed"
+	echo "Mac App Store CLI already installed"
 else
 	echo "Installing Max App Store CLI..."
 	brew install mas
