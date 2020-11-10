@@ -1,9 +1,10 @@
-format= """\
+format = """\
 	$username\
 	$directory\
+	$git_branch\
+	$line_break\
 	$aws\
 	$kubernetes\
-	$git_branch\
 	$character\
 	$line_break\
 """
@@ -13,18 +14,22 @@ show_always = true
 style = "fg:190"
 
 [directory]
-truncate_to_repo = false
+truncate_to_repo = true
+truncation_length = 8
 style = "fg:110"
+
+[git_branch]
+symbol = ""
+style = "fg:190"
 
 [aws]
 symbol = "aws:"
 style = "fg:110"
+format = '[$symbol$profile(\($region\))]($style) '
 
 [kubernetes]
 symbol = "k8s:"
 disabled = false
 style = "fg:190"
+format = '[$symbol$context( \($namespace\))]($style) '
 
-[git_branch]
-symbol = ""
-style = "fg:190"
