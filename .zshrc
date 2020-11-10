@@ -77,8 +77,21 @@ alias kc='kubectl config'
 alias a='argo -n argo'
 alias tf='terraform'
 alias tf-dangerous-a='terraform apply plan.bin && rm -f plan.bin'
-alias tfi='terraform init -backend-config=state.conf -upgrade'
 alias tfp='rm -f plan.bin && terraform plan -out=plan.bin | tee plan.txt'
+
+function tfi {
+  local account=$1
+  local role=$2
+
+  if [[ -n "${account:-}" && -n "${role:-}" ]]; then
+    echo "Initializing Terraform backend under assumed role $1/$2"
+    echo "See documentation at https://docs.gh.team/process/projects/beyondcorp/aws/#assuming-roles"
+
+    tf init -backend-config state.conf -backend-config "role_arn=arn:aws:iam::${1}:role/${2}"
+  else
+    tf init -backend-config state.conf -upgrade
+  fi
+}
 
 alias docker-prune='docker system prune --volumes --all'
 
