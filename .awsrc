@@ -49,7 +49,7 @@ aws-paste-ssm() {
 }
 
 aws-console () {
-  path="${1:-"iam"}";
+  cool_path="${1:-"iam"}";
 
-  aws-vault login support-admin --path=$path
+  aws-vault login support-admin --path=$cool_path
 }
