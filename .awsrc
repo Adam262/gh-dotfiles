@@ -1,4 +1,4 @@
-# use via aws-vault exec support <my command> 
+# use via aws-vault exec support <my command>
 
 export AWS_PROFILE="support"
 export AWS_REGION='us-east-1'
@@ -6,24 +6,24 @@ export AWS_VAULT_BACKEND=file
 
 aws-vault-use   () {
   unset AWS_VAULT
-  eval $(aws-vault exec -d 24h "$@" -- env \
+  eval $(aws-vault exec -d 12h "$@" -- env \
     | awk '/^AWS/ { print "export " $1 }')
 }
 
 alias aws-sup='aws-vault-use support'
-alias aws-kill-session='aws-vault remove -s support'
+alias aws-kill-session='export AWS_VAULT="" && aws-vault remove -s support'
 alias aws-get-user-keys='AWS_VAULT="" aws-vault exec support --no-session env | grep AWS'
 
-aws-set-ssm () { 
+aws-set-ssm () {
   local name value region;
   name="$1";
   value="$2";
   region="${3:-'us-east-1'}";
-  
+
   aws ssm put-parameter --name "$name" --type SecureString --value "$value" --region "$region" --overwrite
 }
 
-aws-get-ssm () { 
+aws-get-ssm () {
   local name region;
   name="$1";
   region="${2:-"us-east-1"}";
@@ -45,7 +45,7 @@ aws-paste-ssm() {
   region="$2"
 
   # quotes around subshell make sure all whitespace gets preserved as-is
-  aws-set-ssm $name "$(pbpaste)" $region --overwrite  
+  aws-set-ssm $name "$(pbpaste)" $region --overwrite
 }
 
 aws-console () {

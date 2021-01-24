@@ -39,7 +39,7 @@ autoload -U compinit && compinit -u
 
 export GOPATH=$HOME/go
 export GOPRIVATE=github.com/grnhse
-export PATH="$PATH:${GOPATH//://bin:}/bin"
+export PATH=$PATH:$GOPATH/bin
 
 export PATH="$PATH:$HOME/.dajoku-cli/bin"
 export PATH="$HOME/.yarn/bin:$PATH"
@@ -57,10 +57,10 @@ export BUNDLER_EDITOR='subl'
 
 export RACK_TIMEOUT=120
 export UNICORN_TIMEOUT=1000
- 
+
 alias dj='BUNDLE_GEMFILE=~/Code/dajoku_cli/Gemfile bundle exec ruby -I ~/Code/dajoku_cli/lib ~/Code/dajoku_cli/bin/dajoku'
 alias le="local/exec $1"
- 
+
 # Pass in PR URL
 function dj-integration-test {
   dajoku auth check -s dev-staging;
@@ -74,9 +74,10 @@ alias k='kubectl'
 alias ka='kubectl -n argo'
 alias kd='kubectl -n dajoku'
 alias kc='kubectl config'
-alias a='ASDF_ARGO_VERSION=2.4.3 argo -n argo'
-alias an='ASDF_ARGO_VERSION=2.11.7 argo -n argo-next'
+alias a='ASDF_ARGO_VERSION=2.12.3 argo -n argo'
+alias an='ASDF_ARGO_VERSION=2.11.8 argo -n argo-next'
 alias tf='terraform'
+alias tfi='terraform init -backend-config=state.conf'
 alias tf-dangerous-a='terraform apply plan.bin && rm -f plan.bin'
 alias tfp='rm -f plan.bin && terraform plan -out=plan.bin | tee plan.txt'
 
@@ -123,3 +124,8 @@ eval "$(direnv hook zsh)"
 
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+
+if [[ -f "$HOME/.asdf/asdf.sh" ]] then
+  source "$HOME/.asdf/asdf.sh"
+  source "$HOME/.asdf/completions/asdf.bash"
+fi

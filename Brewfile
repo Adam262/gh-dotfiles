@@ -32,6 +32,7 @@ cask "docker" unless system "find -f '/Applications/Docker.app' > /dev/null"
 cask "flycut"
 cask "font-agave-nerd-font"
 cask "google-cloud-sdk"
+cask "ngrok"
 cask "rectangle"
 cask "sublime-text" unless system "find -f '/Applications/Sublime Text.app' > /dev/null"
 mas "Xcode", id: 497799835

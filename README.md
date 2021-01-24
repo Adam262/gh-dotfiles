@@ -1,5 +1,5 @@
 ### Overview
-Dotfiles for setting up a new Mac running 10.15+   
+Dotfiles for setting up a new Mac running 10.15+
 
 ### Setup
 * `git clone` this repo into your home directory
@@ -9,12 +9,13 @@ The install script will:
 
 * install the Homebrew package manager
 * install the Xcode CLI
-* create symlinks in your `$HOME` directory for the below config files. The script will overwrite any existing files or symlinks in your `$HOME` directory.
-  
-  ** `.editorconfig`
-  ** `.gitconfig`
-  ** `.gitignore`
-  ** `.zshrc`
+* create symlinks to the below config files. The script will overwrite any existing files or symlinks in the listed directory.
+
+  ** `$HOME/.editorconfig         -> .dotfiles/.editorconfig`
+  ** `$HOME/.gitconfig            -> .dotfiles/.gitconfig`
+  ** `$HOME/.gitignore            -> .dotfiles/.gitignore`
+  ** `$HOME/.zshrc                -> .dotfiles/.zshrc`
+  ** `$HOME/.config/starship.toml -> .dotfiles/starship.toml`
 
 * Open a new terminal tab or `source ~/.zshrc`
 
