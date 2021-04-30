@@ -3,6 +3,7 @@
 export AWS_PROFILE="support"
 export AWS_REGION='us-east-1'
 export AWS_VAULT_BACKEND=file
+export AWS_SDK_LOAD_CONFIG=true
 
 aws-vault-use   () {
   unset AWS_VAULT
@@ -18,7 +19,7 @@ aws-set-ssm () {
   local name value region;
   name="$1";
   value="$2";
-  region="${3:-'us-east-1'}";
+  region="${3:-"us-east-1"}";
 
   aws ssm put-parameter --name "$name" --type SecureString --value "$value" --region "$region" --overwrite
 }
@@ -28,6 +29,13 @@ aws-get-ssm () {
   name="$1";
   region="${2:-"us-east-1"}";
   aws ssm get-parameter --name "$name" --region "$region" --with-decryption
+}
+
+aws-delete-ssm () {
+  local name region;
+  name="$1";
+  region="${2:-"us-east-1"}";
+  aws ssm delete-parameter --name "$name" --region "$region"
 }
 
 aws-copy-ssm () {

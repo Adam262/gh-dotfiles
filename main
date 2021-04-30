@@ -17,12 +17,18 @@ if [[ "$response" == "y" || "$response" == "Y" ]]; then
 	ln -sfv "$DOTFILES_DIR/.gitconfig" ~
 	ln -sfv "$DOTFILES_DIR/.gitignore" ~
 	ln -sfv "$DOTFILES_DIR/.zshrc" ~
+  ln -sfv "$DOTFILES_DIR/.tool-versions" ~
   ln -sfv "$DOTFILES_DIR/starship.toml" ~/.config/starship.toml
 else
 	echo "No symlinks written"
 	exit 0
 fi;
 
-echo "Installing brew packages"
+echo "Do you wish to brew install packages? (y/n)"
+read response
 
-DEBUG=$DEBUG "$DOTFILES_DIR/scripts/brew_install"
+if [[ "$response" == "y" || "$response" == "Y" ]]; then
+  echo "Installing brew packages"
+
+  DEBUG=$DEBUG "$DOTFILES_DIR/scripts/brew_install"
+fi;

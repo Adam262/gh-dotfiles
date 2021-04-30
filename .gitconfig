@@ -11,10 +11,12 @@
 	default = current
 [alias]
 	br = branch
+	caa = commit --amend --allow-empty --no-edit
 	co = checkout
 	cob = !git fetch origin master:master && git checkout -b
 	cof = !git checkout `(git branch | fzf)`
-	com = !git checkout master && git pull --rebase origin master
+	com = !git checkout main && git pull --rebase origin main
+	comaster = !git checkout master && git pull --rebase origin master
 	fem = !git fetch origin master
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	rem = !git pull --rebase origin master

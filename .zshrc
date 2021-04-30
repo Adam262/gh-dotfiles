@@ -4,6 +4,8 @@ test -e "$DOTFILES_DIR/.secretsrc" && source "$DOTFILES_DIR/.secretsrc"
 
 test -e "$HOME/.autojump/etc/profile.d/autojump.sh"  && source "$HOME/.autojump/etc/profile.d/autojump.sh"
 
+ulimit -n 10240
+
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 unsetopt correct_all correct
 setopt autocd autopushd
@@ -41,22 +43,27 @@ export GOPATH=$HOME/go
 export GOPRIVATE=github.com/grnhse
 export PATH=$PATH:$GOPATH/bin
 
-export PATH="$PATH:$HOME/.dajoku-cli/bin"
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="$PATH:$HOME/Code/onboarding/bin"
 export PATH="$PATH:$HOME/bin"
+export PATH=/usr/local/bin:$PATH
+export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.dajoku-cli/bin"
+export PATH="$PATH:$HOME/Code/dajoku-api/bin"
+export PATH="$PATH:$HOME/Code/dajoku_cli/bin"
 export PATH="$PATH:$HOME/Code/infrastructure/bin"
+export PATH="$PATH:$HOME/Code/onboarding/bin"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export PATH=/usr/local/bin:$PATH
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
-export EDITOR='subl -w'
+export EDITOR='subl'
+export VISUAL='subl'
 export BUNDLER_EDITOR='subl'
 
 export RACK_TIMEOUT=120
 export UNICORN_TIMEOUT=1000
+
+# export TF_PLUGIN_CACHE_DIR="~/.terraform-cache"
 
 alias dj='BUNDLE_GEMFILE=~/Code/dajoku_cli/Gemfile bundle exec ruby -I ~/Code/dajoku_cli/lib ~/Code/dajoku_cli/bin/dajoku'
 alias le="local/exec $1"
@@ -107,6 +114,15 @@ function decode_k8s_secret() {
   local namespace=${3:-"dajoku"}
 
   kubectl -n $namespace get secrets $secret_name -o=jsonpath="{.data.$secret_key}" | base64 --decode;
+}
+
+# Sample usage
+# kdebug --context prod.use1 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-greenhouse"')"
+# kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
+# kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
+
+function kdebug () {
+  kubectl run -n dajoku -it --rm --labels "consumer=adam,app=debug-tools" --generator run-pod/v1 --image gcr.io/gh-infra/debug-tools "kdebug-adam-$(openssl rand -hex 4)" "$@"
 }
 
 # do not add trailing new line to input + do not wrap output
