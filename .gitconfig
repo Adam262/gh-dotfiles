@@ -1,14 +1,3 @@
-[branch]
-	autosetuprebase = always
-[color]
-	ui = true
-[user]
-	name = Adam Barcan
-	email = adam@greenhouse.io
-[url "git@github.com:"]
-  insteadOf = https://github.com/
-[push]
-	default = current
 [alias]
 	br = branch
 	caa = commit --amend --allow-empty --no-edit
@@ -19,15 +8,33 @@
 	comaster = !git checkout master && git pull --rebase origin master
 	fem = !git fetch origin master
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-	rem = !git pull --rebase origin master
-	reim = !git rebase -i origin master
+	rem = !git pull --rebase origin main
+	remaster = !git pull --rebase origin master
+	reim = !git rebase -i origin main
+	reimaster = !git rebase -i origin master
 	st = status
-[merge]
-	tool = vimdiff
-[rerere]
-	enabled = true
+[branch]
+	autosetuprebase = always
+[color]
+	ui = true
 [core]
 	excludesfile = ~/.gitignore
 	editor = /usr/bin/vim
+[fetch]
+	prune = true
 [init]
 	templateDir = ~/.git-templates
+[merge]
+	tool = vimdiff
+[push]
+	default = current
+[rebase]
+	autosquash = true
+	autostash = true
+[rerere]
+	enabled = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[user]
+	name = Adam Barcan
+	email = adam@greenhouse.io
