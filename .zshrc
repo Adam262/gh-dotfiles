@@ -39,9 +39,7 @@ EOBUNDLES
 antigen apply
 autoload -U compinit && compinit -u
 
-export GOPATH=$HOME/go
 export GOPRIVATE=github.com/grnhse
-export PATH=$PATH:$GOPATH/bin
 
 export PATH="$PATH:$HOME/bin"
 export PATH=/usr/local/bin:$PATH
@@ -55,24 +53,17 @@ export PATH="$PATH:$HOME/Code/onboarding/bin"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-export EDITOR='subl'
-export VISUAL='subl'
-export BUNDLER_EDITOR='subl'
+export EDITOR='subl -n -w'
+export BUNDLER_EDITOR='subl -n -w'
 
 export RACK_TIMEOUT=120
 export UNICORN_TIMEOUT=1000
 
-# export TF_PLUGIN_CACHE_DIR="~/.terraform-cache"
-
 alias dj='BUNDLE_GEMFILE=~/Code/dajoku_cli/Gemfile bundle exec ruby -I ~/Code/dajoku_cli/lib ~/Code/dajoku_cli/bin/dajoku'
 alias le="local/exec $1"
 
-# Pass in PR URL
-function dj-integration-test {
-  dajoku auth check -s dev-staging;
-  bin/pipeline test $1;
-}
 function ngrok-localhost {
   cd && ngrok http "http://localhost:$1" -subdomain=wuta
 }
@@ -88,21 +79,21 @@ alias tfi='terraform init -backend-config=state.conf'
 alias tf-dangerous-a='terraform apply plan.bin && rm -f plan.bin'
 alias tfp='rm -f plan.bin && terraform plan -out=plan.bin | tee plan.txt'
 
-function tfi {
-  local account=$1
-  local role=$2
+alias prune-docker='docker system prune --volumes --all'
 
-  if [[ -n "${account:-}" && -n "${role:-}" ]]; then
-    echo "Initializing Terraform backend under assumed role $1/$2"
-    echo "See documentation at https://docs.gh.team/process/projects/beyondcorp/aws/#assuming-roles"
+function prune-k8s () {
+  local name_substring=$1
+  local resource=${2:-"pod"}
+  local namespace=${3:-"dajoku"}
 
-    tf init -backend-config state.conf -backend-config "role_arn=arn:aws:iam::${1}:role/${2}"
-  else
-    tf init -backend-config state.conf -upgrade
-  fi
+  echo "namespace: $namespace"
+  kubectl get $resource -n $namespace | grep $name_substring | grep -v Running | awk '{ print $1 }' | xargs -I % sh -c "kubectl -n $namespace delete $resource %"
 }
+function prune-branches () {
+  local branch_name=$1
 
-alias docker-prune='docker system prune --volumes --all'
+  git br | grep $branch_name | xargs -I % sh -c 'git br -D %'
+}
 
 alias be='bundle exec'
 alias sozsh='source ~/.zshrc'
@@ -116,6 +107,12 @@ function decode_k8s_secret() {
   kubectl -n $namespace get secrets $secret_name -o=jsonpath="{.data.$secret_key}" | base64 --decode;
 }
 
+# Argo Slack app lives at https://api.slack.com/apps/ADY90NC4Q/incoming-webhooks?success=1
+# A common use of below is for base64 encoding a new Slack webhook into a K8s secret
+function base64_encode_strip() {
+  echo $1 | base64 -w0
+}
+
 # Sample usage
 # kdebug --context prod.use1 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-greenhouse"')"
 # kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
@@ -123,11 +120,6 @@ function decode_k8s_secret() {
 
 function kdebug () {
   kubectl run -n dajoku -it --rm --labels "consumer=adam,app=debug-tools" --generator run-pod/v1 --image gcr.io/gh-infra/debug-tools "kdebug-adam-$(openssl rand -hex 4)" "$@"
-}
-
-# do not add trailing new line to input + do not wrap output
-encode_base64() {
-  printf -- "$1" | base64 -w 0
 }
 
 alias la='ls -a'
