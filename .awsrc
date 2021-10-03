@@ -1,21 +1,20 @@
 # use via aws-vault exec support <my command>
 
-export AWS_PROFILE="support"
-export AWS_REGION='us-east-1'
+export AWS_PROFILE="dev.use1"
 export AWS_VAULT_BACKEND=file
 export AWS_SDK_LOAD_CONFIG=true
 
 aws-vault-use   () {
   unset AWS_VAULT
-  eval $(aws-vault exec -d 12h "$@" -- env \
+  eval $(aws-vault exec "$@" -- env \
     | awk '/^AWS/ { print "export " $1 }')
 }
 
-alias aws-sup='aws-vault-use support'
-alias aws-kill-session='export AWS_VAULT="" && aws-vault remove -s support'
+alias aws-sup='aws-vault-use -d 12h support'
+alias aws-logout='export AWS_VAULT="" && aws-vault remove -s support'
 alias aws-get-user-keys='AWS_VAULT="" aws-vault exec support --no-session env | grep AWS'
 
-aws-set-ssm () {
+aws-ssm-set () {
   local name value region;
   name="$1";
   value="$2";
@@ -24,21 +23,21 @@ aws-set-ssm () {
   aws ssm put-parameter --name "$name" --type SecureString --value "$value" --region "$region" --overwrite
 }
 
-aws-get-ssm () {
+aws-ssm-get () {
   local name region;
   name="$1";
   region="${2:-"us-east-1"}";
   aws ssm get-parameter --name "$name" --region "$region" --with-decryption
 }
 
-aws-delete-ssm () {
+aws-ssm-del () {
   local name region;
   name="$1";
   region="${2:-"us-east-1"}";
   aws ssm delete-parameter --name "$name" --region "$region"
 }
 
-aws-copy-ssm () {
+aws-ssm-copy () {
   local name region;
   name="$1"
   region="$2"
@@ -47,7 +46,7 @@ aws-copy-ssm () {
   aws-get-ssm $name $region | jq -r '.Parameter.Value' | pbcopy
 }
 
-aws-paste-ssm() {
+aws-ssm-paste() {
   local name region;
   name="$1"
   region="$2"
