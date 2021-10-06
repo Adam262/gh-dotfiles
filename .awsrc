@@ -15,44 +15,44 @@ alias aws-logout='export AWS_VAULT="" && aws-vault remove -s support'
 alias aws-get-user-keys='AWS_VAULT="" aws-vault exec support --no-session env | grep AWS'
 
 aws-ssm-set () {
-  local name value region;
+  local name value profile;
   name="$1";
   value="$2";
-  region="${3:-"us-east-1"}";
+  profile="${3:-"us-east-1"}";
 
-  aws ssm put-parameter --name "$name" --type SecureString --value "$value" --region "$region" --overwrite
+  aws ssm put-parameter --name "$name" --type SecureString --value "$value" --profile "$profile" --overwrite
 }
 
 aws-ssm-get () {
-  local name region;
+  local name profile;
   name="$1";
-  region="${2:-"us-east-1"}";
-  aws ssm get-parameter --name "$name" --region "$region" --with-decryption
+  profile="${2:-"dev.use1"}";
+  aws ssm get-parameter --name "$name" --profile "$profile" --with-decryption
 }
 
 aws-ssm-del () {
-  local name region;
+  local name profile;
   name="$1";
-  region="${2:-"us-east-1"}";
-  aws ssm delete-parameter --name "$name" --region "$region"
+  profile="${2:-"us-east-1"}";
+  aws ssm delete-parameter --name "$name" --profile "$profile"
 }
 
 aws-ssm-copy () {
-  local name region;
+  local name profile;
   name="$1"
-  region="$2"
+  profile="$2"
 
   # jq -r is needed for raw string output
-  aws-get-ssm $name $region | jq -r '.Parameter.Value' | pbcopy
+  aws-get-ssm $name $profile | jq -r '.Parameter.Value' | pbcopy
 }
 
 aws-ssm-paste() {
-  local name region;
+  local name profile;
   name="$1"
-  region="$2"
+  profile="$2"
 
   # quotes around subshell make sure all whitespace gets preserved as-is
-  aws-set-ssm $name "$(pbpaste)" $region --overwrite
+  aws-ssm-set $name "$(pbpaste)" $profile 
 }
 
 aws-console () {

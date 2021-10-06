@@ -41,6 +41,9 @@ autoload -U compinit && compinit -u
 
 export GOPRIVATE=github.com/grnhse
 
+export AWS_DEFAULT_PROFILE="dev.use1"
+export AWS_SDK_LOAD_CONFIG=true
+
 export PATH="$PATH:$HOME/bin"
 export PATH=/usr/local/bin:$PATH
 export PATH="$HOME/.yarn/bin:$PATH"
@@ -123,8 +126,22 @@ function kdebug () {
 }
 
 alias la='ls -a'
-alias gcof='git co `(git br | fzf)`'
+alias fzf-gco='git co `(git br | fzf)`'
 alias pboard_reset="ps aux | grep pboard | grep -v grep | awk '{ print $2 }' | xargs kill"
+
+function fzf-history() {
+  history | fzf | awk '{print $1}'
+}
+
+function git-pr-create() {
+  local branch branch_items card
+
+  branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+  branch_items=($(echo $branch | tr "-" "\n"))
+  card="${branch_items[1]}-${branch_items[2]}"
+
+  gh pr create -t "$branch" -b "https://greenhouseio.atlassian.net/browse/$card" "$@"
+}
 
 eval "$(pipelinectl completion zsh)"
 eval "$(starship init zsh)"

@@ -24,7 +24,6 @@ The install script will:
 
 ### To Do
 
-* Generate `.gitconfig` via script so my creds are not hard coded
 * Allow multiple Brewfiles with a common ancestor
 * Prompt to generate or lookup SSH config
 * Add /etc/timezone
