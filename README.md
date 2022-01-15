@@ -2,25 +2,27 @@
 Dotfiles for setting up a new Mac running 10.15+
 
 ### Setup
-* `git clone` this repo into your home directory
-* From anywhere, run `~/.dotfiles/main`.
+`git clone` this repo into your home directory. From `~/.dotfiles` directory, run any of the following `make` targets. The default `make` runs all of them.
+
+`make brew_install`
 
 The install script will:
 
 * install the Homebrew package manager
 * install the Xcode CLI
-* create symlinks to the below config files. The script will overwrite any existing files or symlinks in the listed directory.
+* install Brew formulae, casks and Mac app store applications from `Brewfile`. 
+
+`make symlink`
+
+The install script will:
+
+* create symlinks to the below config files. The script will overwrite any existing files or symlinks in the listed directory. Note you will need to open a new terminal tab or `source ~/.zshrc`
 
   ** `$HOME/.editorconfig         -> .dotfiles/.editorconfig`
   ** `$HOME/.gitconfig            -> .dotfiles/.gitconfig`
   ** `$HOME/.gitignore            -> .dotfiles/.gitignore`
   ** `$HOME/.zshrc                -> .dotfiles/.zshrc`
   ** `$HOME/.config/starship.toml -> .dotfiles/starship.toml`
-
-* Open a new terminal tab or `source ~/.zshrc`
-
-### Installed Formulae, Casks and Mac App Store Applications
-* See Brewfile
 
 ### To Do
 
