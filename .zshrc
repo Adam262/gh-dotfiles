@@ -42,6 +42,7 @@ autoload -U compinit && compinit -u
 export GOPRIVATE=github.com/grnhse
 
 export AWS_DEFAULT_PROFILE="dev.use1"
+export AWS_PROFILE="dev.use1"
 export AWS_SDK_LOAD_CONFIG=true
 
 export PATH="$PATH:$HOME/bin"

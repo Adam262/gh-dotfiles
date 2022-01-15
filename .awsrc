@@ -13,12 +13,13 @@ aws-vault-use   () {
 alias aws-sup='aws-vault-use -d 12h support'
 alias aws-logout='export AWS_VAULT="" && aws-vault remove -s support'
 alias aws-get-user-keys='AWS_VAULT="" aws-vault exec support --no-session env | grep AWS'
+alias aws-sessions='aws-vault list | grep sso'
 
 aws-ssm-set () {
   local name value profile;
   name="$1";
   value="$2";
-  profile="${3:-"us-east-1"}";
+  profile="${3:-"dev.use1"}";
 
   aws ssm put-parameter --name "$name" --type SecureString --value "$value" --profile "$profile" --overwrite
 }
@@ -33,7 +34,7 @@ aws-ssm-get () {
 aws-ssm-del () {
   local name profile;
   name="$1";
-  profile="${2:-"us-east-1"}";
+  profile="${2:-"dev.use1"}";
   aws ssm delete-parameter --name "$name" --profile "$profile"
 }
 
