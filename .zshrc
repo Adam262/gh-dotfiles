@@ -58,9 +58,10 @@ export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH="$PATH:$(go env GOPATH)/bin"
 
-export EDITOR='subl -n -w'
-export BUNDLER_EDITOR='subl -n -w'
+export EDITOR='code -w'
+export BUNDLER_EDITOR='code -w'
 
 export RACK_TIMEOUT=120
 export UNICORN_TIMEOUT=1000
@@ -76,8 +77,7 @@ alias k='kubectl'
 alias ka='kubectl -n argo'
 alias kd='kubectl -n dajoku'
 alias kc='kubectl config'
-alias a='ASDF_ARGO_VERSION=2.12.3 argo -n argo'
-alias an='ASDF_ARGO_VERSION=2.11.8 argo -n argo-next'
+alias a='argo -n argo'
 alias tf='terraform'
 alias tfi='terraform init -backend-config=state.conf'
 alias tf-dangerous-a='terraform apply plan.bin && rm -f plan.bin'
@@ -117,6 +117,12 @@ function base64_encode_strip() {
   echo $1 | base64 -w0
 }
 
+function jwt_decode() {
+  local jwt_token="$1"
+  
+  jwt -show - <<<"$jwt_token"
+}
+
 # Sample usage
 # kdebug --context prod.use1 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-greenhouse"')"
 # kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
@@ -142,6 +148,14 @@ function git-pr-create() {
   card="${branch_items[1]}-${branch_items[2]}"
 
   gh pr create -t "$branch" -b "https://greenhouseio.atlassian.net/browse/$card" "$@"
+  gh pr view --web
+}
+
+function git-pr-list() {
+  local author
+  author="${author:-@me}"
+
+  gh pr list --author @me -w
 }
 
 eval "$(pipelinectl completion zsh)"
@@ -155,3 +169,4 @@ if [[ -f "$HOME/.asdf/asdf.sh" ]] then
   source "$HOME/.asdf/asdf.sh"
   source "$HOME/.asdf/completions/asdf.bash"
 fi
+export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"

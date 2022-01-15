@@ -1,4 +1,4 @@
-argo 2.4.3
+argo 3.0.2
 awscli 2.2.39
 buildpack 0.16.0
 golang 1.16.4

@@ -1,6 +1,8 @@
 [alias]
+	ap = !git add -N . && git add -p
 	br = branch
 	caa = commit --amend --allow-empty --no-edit
+	capf = !git commit --amend && git push -f	
 	co = checkout
 	cob = !git fetch origin master:master && git checkout -b
 	cof = !git checkout `(git branch | fzf)`
@@ -8,10 +10,11 @@
 	comaster = !git checkout master && git pull --rebase origin master
 	fem = !git fetch origin master
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-	rem = !git pull --rebase origin main
-	remaster = !git pull --rebase origin master
-	reim = !git rebase -i origin main
-	reimaster = !git rebase -i origin master
+	pf = !git push -f
+	rem = !git checkout main && git co - && git pull --rebase origin main
+	remaster = !git checkout master && git co - && git pull --rebase origin master
+	reim = !git rebase -i main
+	reimaster = !git rebase -i master
 	st = status
 [branch]
 	autosetuprebase = always
@@ -24,6 +27,7 @@
 	prune = true
 [init]
 	templateDir = ~/.git-templates
+	defaultBranch = main
 [merge]
 	tool = vimdiff
 [push]
