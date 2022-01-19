@@ -1,0 +1,11 @@
+# Argo Slack app lives at https://api.slack.com/apps/ADY90NC4Q/incoming-webhooks?success=1
+# A common use of below is for base64 encoding a new Slack webhook into a K8s secret
+function base64_encode_strip() {
+  echo $1 | base64 -w0
+}
+
+function jwt_decode() {
+  local jwt_token="$1"
+  
+  jwt -show - <<<"$jwt_token"
+}

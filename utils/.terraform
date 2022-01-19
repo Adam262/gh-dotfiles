@@ -1,0 +1,4 @@
+alias tf='terraform'
+alias tfi='terraform init -backend-config=state.conf'
+alias tf-dangerous-a='terraform apply plan.bin && rm -f plan.bin'
+alias tfp='rm -f plan.bin && terraform plan -out=plan.bin | tee plan.txt'

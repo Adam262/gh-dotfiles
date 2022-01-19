@@ -1,0 +1,5 @@
+alias fzf-gco='git co `(git br | fzf)`'
+
+function fzf-history() {
+  history | fzf | awk '{print $1}'
+}

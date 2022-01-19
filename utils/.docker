@@ -1,0 +1,1 @@
+alias prune-docker='docker system prune --volumes --all'

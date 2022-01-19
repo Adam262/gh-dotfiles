@@ -1,0 +1,32 @@
+### K8s ### 
+
+alias k='kubectl'
+alias ka='kubectl -n argo'
+alias kd='kubectl -n dajoku'
+alias kc='kubectl config'
+
+# Sample usage
+# kdebug --context prod.use1 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-greenhouse"')"
+# kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
+# kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
+
+function k8s-debug () {
+  kubectl run -n dajoku -it --rm --labels "consumer=adam,app=debug-tools" --generator run-pod/v1 --image gcr.io/gh-infra/debug-tools "kdebug-adam-$(openssl rand -hex 4)" "$@"
+}
+
+function k8s-decode-secret() {
+  local secret_name=$1
+  local secret_key=${2:-"dajoku_auth_token"}
+  local namespace=${3:-"dajoku"}
+
+  kubectl -n $namespace get secrets $secret_name -o=jsonpath="{.data.$secret_key}" | base64 --decode;
+}
+
+function k8s-prune () {
+  local name_substring=$1
+  local resource=${2:-"pod"}
+  local namespace=${3:-"dajoku"}
+
+  echo "namespace: $namespace"
+  kubectl get $resource -n $namespace | grep $name_substring | grep -v Running | awk '{ print $1 }' | xargs -I % sh -c "kubectl -n $namespace delete $resource %"
+}
