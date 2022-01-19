@@ -1,0 +1,11 @@
+function gprc-protoc-compile() {
+    local path_to_proto_file
+    path_to_proto_file="$1"
+
+    protoc \
+        --go_out=. \
+        --go_opt=paths=source_relative \
+        --go-grpc_out=. \
+        --go-grpc_opt=paths=source_relative \
+        $path_to_proto_file
+}
