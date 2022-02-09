@@ -1,5 +1,5 @@
 alias fzf-gco='git co `(git br | fzf)`'
 
 function fzf-history() {
-  history | fzf | awk '{print $1}'
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | gsed -r 's/ *[0-9]*\*? *//' | gsed -r 's/\\/\\\\/g')
 }

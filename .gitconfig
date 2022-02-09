@@ -4,7 +4,7 @@
 	caa = commit --amend --allow-empty --no-edit
 	capf = !git commit --amend && git push -f	
 	co = checkout
-	cob = !git fetch origin master:master && git checkout -b
+	cob = !git fetch origin main:main && git checkout -b
 	cof = !git checkout `(git branch | fzf)`
 	com = !git checkout main && git pull --rebase origin main
 	comaster = !git checkout master && git pull --rebase origin master
