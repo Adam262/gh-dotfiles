@@ -18,6 +18,9 @@ symlink:
 	ln -sfv "${DOTFILES_DIR}/.tool-versions" ~
 	ln -sfv "${DOTFILES_DIR}/starship.toml" ~/.config/starship.toml
 
+	mkdir -p ~/.config/sso-token-cli
+	ln -sfv "${DOTFILES_DIR}/.gh-sso-config" ~/.config/sso-token-cli/config
+
 brew_install:
 	@echo "Installing brew packages"
 
