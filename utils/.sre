@@ -13,10 +13,25 @@ get-asgs () {
 	aws autoscaling --profile="$profile" describe-auto-scaling-groups | jq -er '.AutoScalingGroups[].AutoScalingGroupName'
 }
 
-asgterm () {
-    local instance-id profile
-    instance-id="$1"
+asgterm-all () {
+    local text profile
+    text="$1"
     profile=${2:-"dev.use1"}
 
-    aws autoscaling terminate-instance-in-auto-scaling-group --no-should-decrement-desired-capacity --instance-id "$instance-id"
+    for i in $(n2ip "$text" "$profile" | awk '{print $3}'); do asgterm $i "$profile"; done
+}
+
+asgterm () {
+    local instance_id profile
+    instance_id="$1"
+    profile=${2:-"dev.use1"}
+
+    aws autoscaling --profile="$profile" terminate-instance-in-auto-scaling-group --no-should-decrement-desired-capacity --instance-id "$instance_id"
+}
+
+ssl-cert-inspect () { 
+    local cert-name
+    cert-name=$1
+    
+    openssl x509 -in "/etc/ssl/certs/${cert-name}" -nout -text
 }

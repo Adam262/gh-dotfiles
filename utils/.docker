@@ -1,1 +1,5 @@
 alias prune-docker='docker system prune --volumes --all'
+
+docker-ps-watch () {
+    watch 'docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Command}}"'
+}
