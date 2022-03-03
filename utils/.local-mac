@@ -1,0 +1,10 @@
+get-open-ports() {
+    lsof -i -P | grep -i "listen"
+}
+
+is-localhost-port-open() {
+    local port
+    port="$1"
+    
+    nmap 127.0.0.1 -p "$port"
+}
