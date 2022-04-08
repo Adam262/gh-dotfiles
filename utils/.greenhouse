@@ -1,4 +1,38 @@
+export PATH="$PATH:$HOME/.dajoku-cli/bin"
+
+# sometimes sso token cli hangs because there are multiple of it holding port 54321 open
+# fix is to run below and kill process
+# ps xa | grep -e dajoku -e sso-token-cli
 export SSO_TOKEN_CLI_CONFIG="/Users/adam.barcan/.config/sso-token-cli/config"
 
 alias logclide="logcli --addr https://dev-loki-green.dev.use1.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
 alias logclidw="logcli --addr https://dev-loki-green.dev.usw2.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
+
+dajoku-reinstall () {
+    curl -L https://s3.amazonaws.com/grnhse-vpc-assets/dajoku-cli/install.sh | bash
+}
+
+# Sample queries
+# logclidw query '{namespace="dajoku", dajoku_application="lotus"}' --tail --since 48h --no-labels
+# logclide query '{dajoku_build_controller_workflow="true"} |= "61d080"' --limit 10000 --since 12h
+
+# Common labels
+# dajoku_application="api"
+# dajoku_build_controller_workflow="true"
+# dajoku_git_commit="123c2ab487e3e07b8d7d9905362f24f439f10883"
+# namespace="argo"
+
+alias sopsnew='EDITOR="subl -w" BUNDLE_EDITOR="subl -w" sopsnew'
+alias sops='EDITOR="subl -w" BUNDLE_EDITOR="subl -w" sops'
+
+use-vault-dev-usw2-main() {
+    export VAULT_ADDR=https://vault.dev.usw2.gh.internal:8200
+
+    echo "VAULT_ADDR set to $VAULT_ADDR"
+}
+
+use-vault-test() {
+    export VAULT_ADDR=https://vault-test.dev.usw2.gh.internal:8200
+
+    echo "VAULT_ADDR set to $VAULT_ADDR"
+}
