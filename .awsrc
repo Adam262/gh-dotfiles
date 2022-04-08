@@ -1,25 +1,33 @@
 # use via aws-vault exec support <my command>
 
-export AWS_PROFILE="dev.use1"
+export AWS_DEFAULT_PROFILE="dev.usw2"
+export AWS_PROFILE="dev.usw2"
 export AWS_VAULT_BACKEND=file
 export AWS_SDK_LOAD_CONFIG=true
 
-aws-vault-use   () {
-  unset AWS_VAULT
-  eval $(aws-vault exec "$@" -- env \
-    | awk '/^AWS/ { print "export " $1 }')
+aws-use-profile() {
+  local profile 
+  profile="${3:-"dev.usw2"}";
+
+  export AWS_PROFILE="$profile"
 }
 
-alias aws-sup='aws-vault-use -d 12h support'
+aws-use-dev-usw2() {
+  aws-use-profile "dev.usw2"
+}
+
+aws-use-dev-use1() {
+  aws-use-profile "dev.use1"
+}
+
 alias aws-logout='export AWS_VAULT="" && aws-vault remove -s support'
-alias aws-get-user-keys='AWS_VAULT="" aws-vault exec support --no-session env | grep AWS'
 alias aws-sessions='aws-vault list | grep sso'
 
 aws-ssm-set () {
   local name value profile;
   name="$1";
   value="$2";
-  profile="${3:-"dev.use1"}";
+  profile="${3:-"dev.usw2"}";
 
   aws ssm put-parameter --name "$name" --type SecureString --value "$value" --profile "$profile" --overwrite
 }
@@ -27,21 +35,21 @@ aws-ssm-set () {
 aws-ssm-get () {
   local name profile;
   name="$1";
-  profile="${2:-"dev.use1"}";
+  profile="${2:-"dev.usw2"}";
   aws ssm get-parameter --name "$name" --profile "$profile" --with-decryption
 }
 
 aws-ssm-del () {
   local name profile;
   name="$1";
-  profile="${2:-"dev.use1"}";
+  profile="${2:-"dev.usw2"}";
   aws ssm delete-parameter --name "$name" --profile "$profile"
 }
 
 aws-ssm-copy () {
   local name profile;
   name="$1"
-  profile="$2"
+  profile="${2:-"dev.usw2"}";
 
   # jq -r is needed for raw string output
   aws-get-ssm $name $profile | jq -r '.Parameter.Value' | pbcopy
@@ -50,14 +58,8 @@ aws-ssm-copy () {
 aws-ssm-paste() {
   local name profile;
   name="$1"
-  profile="$2"
+  profile="${2:-"dev.usw2"}";
 
   # quotes around subshell make sure all whitespace gets preserved as-is
   aws-ssm-set $name "$(pbpaste)" $profile 
-}
-
-aws-console () {
-  cool_path="${1:-"iam"}";
-
-  aws-vault login support-admin --path=$cool_path
 }
