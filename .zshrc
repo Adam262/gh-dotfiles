@@ -83,6 +83,7 @@ function ngrok-localhost {
 eval "$(pipelinectl completion zsh)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
+. "$(pack completion --shell zsh)"
 
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
