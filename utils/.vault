@@ -1,0 +1,28 @@
+vault-bootstrap() {
+  rm -rf $HOME/.dotfiles/data/vault
+
+  mkdir -p $HOME/.dotfiles/data/vault
+  vault server -config=/Users/adam.barcan/.dotfiles/vault-config.hcl
+}
+
+vault-init-unseal() {
+  response=$(curl --request POST --data '{"secret_shares":1,"secret_threshold":1}' http://127.0.0.1:8200/v1/sys/init)
+
+  vault_token=$(echo $response | jq '.root_token' | tr -d '"')
+  base64_unseal_token=$(echo $response | jq '.keys_base64[]' | tr -d '"')
+
+  echo "Setting VAULT_TOKEN to $vault_token"
+  export VAULT_TOKEN="$vault_token"
+
+  echo "Setting BASE64_UNSEAL_TOKEN to $base64_unseal_token"
+  export BASE64_UNSEAL_TOKEN="$base64_unseal_token"
+
+  jq -n --arg unseal_token "$BASE64_UNSEAL_TOKEN" '{key: $unseal_token}' |
+    curl --request POST --data  @- http://127.0.0.1:8200/v1/sys/unseal
+}
+
+vault-get-raft-config() {
+  curl \
+    --header "X-Vault-Token: $VAULT_TOKEN" \
+    http://127.0.0.1:8200/v1/sys/storage/raft/configuration | jq
+}

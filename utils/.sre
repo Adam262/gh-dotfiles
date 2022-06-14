@@ -13,12 +13,11 @@ get-asgs () {
 	aws autoscaling --profile="$profile" describe-auto-scaling-groups | jq -er '.AutoScalingGroups[].AutoScalingGroupName'
 }
 
-asgterm-all () {
-    local text profile
-    text="$1"
-    profile=${2:-"dev.usw2"}
-
-    for i in $(n2ip "$text" "$profile" | awk '{print $4}'); do asgterm $i "$profile"; done
+asgterm-all-vault-test-dev-vault-usw2 () {
+    local nodes answer
+    nodes="$(n2ip dev-vault-test dev.usw2)"
+    echo "Terminating nodes:\n$nodes\n"
+    for i in $(echo $nodes | awk '{print $3}'); do asgterm $i; done
 }
 
 asgterm () {

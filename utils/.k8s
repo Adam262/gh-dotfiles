@@ -30,3 +30,10 @@ function k8s-prune () {
   echo "namespace: $namespace"
   kubectl get $resource -n $namespace | grep $name_substring | grep -v Running | awk '{ print $1 }' | xargs -I % sh -c "kubectl -n $namespace delete $resource %"
 }
+
+function jwt-show () {
+  local base64_encoded_jwt
+  base64_encoded_jwt="$1"
+  
+  base64 --decode <<<$base64_encoded_jwt | jwt -show -
+}
