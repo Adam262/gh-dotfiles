@@ -1,3 +1,6 @@
 .gh-sso-config
 .secretsrc
 .envrc
+.vscode/
+scratch.txt
+scratch/
