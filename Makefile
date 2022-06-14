@@ -23,5 +23,5 @@ symlink:
 
 brew_install:
 	@echo "Installing brew packages"
-
-  	DEBUG="${DEBUG}" "${DOTFILES_DIR}/scripts/brew_install"
+	
+  DEBUG="${DEBUG}" "${DOTFILES_DIR}/scripts/brew_install"

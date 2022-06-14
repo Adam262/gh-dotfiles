@@ -93,3 +93,9 @@ if [[ -f "$HOME/.asdf/asdf.sh" ]] then
   source "$HOME/.asdf/completions/asdf.bash"
 fi
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
+
+export GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)";
+
+for bindir in ${GNUBINS[@]}; do
+  export PATH=$bindir:$PATH;
+done;
