@@ -62,13 +62,13 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 
 export EDITOR='code -w'
 export BUNDLER_EDITOR='code -w'
+export KUBE_EDITOR='subl -w'
 
 export RACK_TIMEOUT=120
 export UNICORN_TIMEOUT=1000
 
 alias be='bundle exec'
-alias sozsh='source ~/.zshrc'
-alias suzsh='subl ~/.zshrc'
+alias source_zsh='source ~/.zshrc'
 
 alias la='ls -a'
 alias pboard_reset="ps aux | grep pboard | grep -v grep | awk '{ print $2 }' | xargs kill"
@@ -81,6 +81,7 @@ function ngrok-localhost {
 }
 
 eval "$(pipelinectl completion zsh)"
+eval "$(kubectl completion zsh)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 . "$(pack completion --shell zsh)"

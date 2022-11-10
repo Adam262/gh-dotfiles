@@ -1,9 +1,19 @@
 ### K8s ### 
 
 alias k='kubectl'
-alias ka='kubectl -n argo'
-alias kd='kubectl -n dajoku'
 alias kc='kubectl config'
+
+alias ka='kubectl -n argo'
+alias kause1='kubectl -n argo --context=dev.use1'
+alias kausw2='kubectl -n argo --context=dev.usw2'
+alias ka-prod-use1='kubectl -n argo --context=prod.use1'
+
+alias kd='kubectl -n dajoku'
+alias k-use1='kubectl --context=dev.use1'
+alias k-usw2='kubectl --context=dev.usw2'
+alias k-puse1='kubectl --context=prod.use1'
+alias k-pusw2='kubectl --context=prod.usw2'
+alias k-buse1='kubectl --context=bastion.use1'
 
 # Sample usage
 # kdebug --context prod.use1 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-greenhouse"')"
@@ -30,3 +40,10 @@ function k8s-prune () {
   echo "namespace: $namespace"
   kubectl get $resource -n $namespace | grep $name_substring | grep -v Running | awk '{ print $1 }' | xargs -I % sh -c "kubectl -n $namespace delete $resource %"
 }
+<<<<<<< HEAD
+=======
+
+function kc-use () {
+  kc use $(kc get-contexts | awk '{print $1}' | fzf)
+}
+>>>>>>> 259ff0d (Improve k8s, aws aliases)

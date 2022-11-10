@@ -1,23 +1,15 @@
 # use via aws-vault exec support <my command>
 
-export AWS_DEFAULT_PROFILE="dev.usw2"
-export AWS_PROFILE="dev.usw2"
+export AWS_DEFAULT_PROFILE="dev.use1"
+export AWS_PROFILE="dev.use1"
 export AWS_VAULT_BACKEND=file
 export AWS_SDK_LOAD_CONFIG=true
 
-aws-use-profile() {
+aws-use() {
   local profile 
-  profile="${3:-"dev.usw2"}";
+  profile="${3:-"dev.use1"}";
 
   export AWS_PROFILE="$profile"
-}
-
-aws-use-dev-usw2() {
-  aws-use-profile "dev.usw2"
-}
-
-aws-use-dev-use1() {
-  aws-use-profile "dev.use1"
 }
 
 alias aws-logout='export AWS_VAULT="" && aws-vault remove -s support'
@@ -63,3 +55,8 @@ aws-ssm-paste() {
   # quotes around subshell make sure all whitespace gets preserved as-is
   aws-ssm-set $name "$(pbpaste)" $profile 
 }
+
+aws-list-profiles() {
+   aws configure list-profiles | grep -v vaulted-
+}
+ 
