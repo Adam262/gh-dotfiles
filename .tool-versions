@@ -1,7 +1,9 @@
 argo 3.0.2
+argocd 2.2.4
 awscli 2.2.39
 aws-vault 6.6.0
 buildpack 0.25.0
+gcloud 367.0.0
 golang 1.16.4
 golangci-lint 1.38.0
 helm 3.5.2
@@ -13,8 +15,9 @@ jb 0.4.0
 jq 1.6
 nodejs 11.3.0
 protoc 3.15.6
-python 3.7.6
+python 3.9.14
 ruby 2.6.5
 tanka 0.15.0
 terraform 0.12.23
 vault 1.9.2
+yj 5.0.0
