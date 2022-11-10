@@ -14,7 +14,7 @@ dajoku-reinstall () {
 
 # Sample queries
 # logclidw query '{namespace="dajoku", dajoku_application="lotus"}' --tail --since 48h --no-labels
-# logclide query '{dajoku_build_controller_workflow="true"} |= "61d080"' --limit 10000 --since 12h
+# logclide query '{dajoku_build_controller_workflow="true"} |= "d3f466"' --limit 10000 --since 2h
 
 # Common labels
 # dajoku_application="api"
@@ -24,15 +24,27 @@ dajoku-reinstall () {
 
 alias sopsnew='EDITOR="subl -w" BUNDLE_EDITOR="subl -w" sopsnew'
 alias sops='EDITOR="subl -w" BUNDLE_EDITOR="subl -w" sops'
+alias pc="pipelinectl"
 
-use-vault-dev-usw2-main() {
-    export VAULT_ADDR=https://vault.dev.usw2.gh.internal:8200
+vault-use() {
+    local cluster
+    cluster=${1:-"dev.usw2"}
+    export VAULT_ADDR="https://vault.$cluster.gh.internal:8200"
 
     echo "VAULT_ADDR set to $VAULT_ADDR"
 }
 
-use-vault-test() {
+vault-use-test() {
     export VAULT_ADDR=https://vault-test.dev.usw2.gh.internal:8200
 
     echo "VAULT_ADDR set to $VAULT_ADDR"
 }
+
+vault-list-k8s-role() {
+  local role
+  cluster=${1:-"dev-usw2"}
+
+  vault list auth/kubernetes-"$cluster"/role
+}
+
+# vault-use-test
