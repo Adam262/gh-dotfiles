@@ -1,7 +1,7 @@
 DOTFILES_DIR = "${HOME}/.dotfiles"
 DEBUG ?=  false
 
-.PHONY: hello setup symlink brew_install
+.PHONY: hello symlink brew_install
 
 hello:
 	@echo "Hello World"
@@ -24,4 +24,4 @@ symlink:
 brew_install:
 	@echo "Installing brew packages"
 	
-  DEBUG="${DEBUG}" "${DOTFILES_DIR}/scripts/brew_install"
+  	DEBUG="${DEBUG}" "${DOTFILES_DIR}/scripts/brew_install"
