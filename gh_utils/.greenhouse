@@ -1,4 +1,4 @@
-export PATH="$PATH:$HOME/.dajoku-cli/bin"
+eval "$(pipelinectl completion zsh)"
 
 # sometimes sso token cli hangs because there are multiple of it holding port 54321 open
 # fix is to run below and kill process
@@ -7,10 +7,6 @@ export SSO_TOKEN_CLI_CONFIG="/Users/adam.barcan/.config/sso-token-cli/config"
 
 alias logclide="logcli --addr https://dev-loki-green.dev.use1.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
 alias logclidw="logcli --addr https://dev-loki-green.dev.usw2.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
-
-dajoku-reinstall () {
-    curl -L https://s3.amazonaws.com/grnhse-vpc-assets/dajoku-cli/install.sh | bash
-}
 
 # Sample queries
 # logclidw query '{namespace="dajoku", dajoku_application="lotus"}' --tail --since 48h --no-labels
@@ -47,4 +43,4 @@ vault-list-k8s-role() {
   vault list auth/kubernetes-"$cluster"/role
 }
 
-# vault-use-test
+vault-use-test

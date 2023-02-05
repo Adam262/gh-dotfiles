@@ -1,8 +1,9 @@
 #!/bin/bash
 # Based on https://openfolder.sh/macos-migrations-with-brewfile
+DEBUG=${DEBUG:-false}
 
 set -eo pipefail
-[[ -n "${DEBUG:-}" ]] && set -x
+[[ "${DEBUG}" == "true" ]] && set -x
 
 # Check for Homebrew installed
 if command -v brew > /dev/null 2>&1 ; then
