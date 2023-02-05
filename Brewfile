@@ -44,3 +44,5 @@ cask "rectangle"
 cask "sublime-text" unless system "find -f '/Applications/Sublime Text.app' > /dev/null"
 cask "backblaze"
 mas "Xcode", id: 497799835
+mas "Bitdefender", id: 500154009
+mas "1Password", id: 1333542190
