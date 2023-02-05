@@ -1,12 +1,12 @@
 DOTFILES_DIR = "${HOME}/.dotfiles"
 DEBUG ?=  false
 
-.PHONY: hello symlink brew_install
+.PHONY: hello symlink brew_install asdf_install
+
+all: symlink brew_install asdf_install
 
 hello:
 	@echo "Hello World"
-
-all: symlink brew_install
 
 symlink:
 	@echo "Symlinking dotfiles to HOME and/or HOME/.config directories."
@@ -23,5 +23,8 @@ symlink:
 
 brew_install:
 	@echo "Installing brew packages"
-	
-  	DEBUG="${DEBUG}" "${DOTFILES_DIR}/scripts/brew_install"
+	DEBUG=${DEBUG} "${DOTFILES_DIR}/scripts/brew_install"
+
+asdf_install:
+	@echo "Installing asdf plugins and packages"
+	DEBUG=${DEBUG} "${DOTFILES_DIR}/scripts/asdf_install"

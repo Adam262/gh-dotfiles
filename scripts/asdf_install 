@@ -1,0 +1,8 @@
+#!/bin/bash
+DEBUG=${DEBUG:-false}
+
+set -eo pipefail
+[[ "${DEBUG}" == "true" ]] && set -x
+
+cat .tool-versions | awk '{ print $1 }' | xargs -I % sh -c 'asdf plugin add %'
+asdf install
