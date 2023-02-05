@@ -4,6 +4,9 @@ test -e "$DOTFILES_DIR/.secretsrc" && source "$DOTFILES_DIR/.secretsrc"
 
 test -e "$HOME/.autojump/etc/profile.d/autojump.sh"  && source "$HOME/.autojump/etc/profile.d/autojump.sh"
 
+# Uncomment for Greenhouse utils
+# source gh_utils/.greenhouse
+
 for util in $(ls -a "$DOTFILES_DIR/utils"); do
   source "$DOTFILES_DIR/utils/$util"
 done
@@ -24,7 +27,7 @@ unsetopt share_history
 unsetopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
 
-source /usr/local/share/antigen/antigen.zsh
+source /opt/homebrew/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -80,7 +83,6 @@ function ngrok-localhost {
   cd && ngrok http "http://localhost:$1" -subdomain=wuta
 }
 
-eval "$(pipelinectl completion zsh)"
 eval "$(kubectl completion zsh)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
