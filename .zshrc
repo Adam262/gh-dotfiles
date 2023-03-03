@@ -27,7 +27,7 @@ unsetopt share_history
 unsetopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
 
-source /opt/homebrew/share/antigen/antigen.zsh
+source $(brew --prefix)/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -87,6 +87,7 @@ eval "$(kubectl completion zsh)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 . "$(pack completion --shell zsh)"
+. <(stern --completion=zsh)
 
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
@@ -102,3 +103,7 @@ export GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)";
 for bindir in ${GNUBINS[@]}; do
   export PATH=$bindir:$PATH;
 done;
+
+function source-zsh {
+  source "$HOME/.zshrc"
+}
