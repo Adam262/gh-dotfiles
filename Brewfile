@@ -24,12 +24,14 @@ brew "libpq"
 brew "mas"
 brew "md5sha1sum"
 brew "nmap"
+brew "parallel"
 brew "ripgrep"
 brew "shellcheck"
 brew "speedtest-cli"
 brew "starship"
 brew "stern"
 brew "tmux"
+brew "tree"
 brew "yarn"
 brew "yj"
 brew "watch"
@@ -45,4 +47,4 @@ cask "sublime-text" unless system "find -f '/Applications/Sublime Text.app' > /d
 cask "backblaze"
 mas "Xcode", id: 497799835
 mas "Bitdefender", id: 500154009
-mas "1Password", id: 1333542190
+# mas "1Password", id: 1333542190
