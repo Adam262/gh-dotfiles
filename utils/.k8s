@@ -4,16 +4,10 @@ alias k='kubectl'
 alias kc='kubectl config'
 
 alias ka='kubectl -n argo'
-alias kause1='kubectl -n argo --context=dev.use1'
-alias kausw2='kubectl -n argo --context=dev.usw2'
-alias ka-prod-use1='kubectl -n argo --context=prod.use1'
-
 alias kd='kubectl -n dajoku'
-alias k-use1='kubectl --context=dev.use1'
-alias k-usw2='kubectl --context=dev.usw2'
-alias k-puse1='kubectl --context=prod.use1'
-alias k-pusw2='kubectl --context=prod.usw2'
-alias k-buse1='kubectl --context=bastion.use1'
+alias kks='kubectl -n kube-system'
+alias ks='kubectl -n security'
+
 
 # Sample usage
 # kdebug --context prod.use1 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-greenhouse"')"
