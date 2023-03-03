@@ -1,13 +1,13 @@
 # use via aws-vault exec support <my command>
 
-export AWS_DEFAULT_PROFILE="dev.use1"
-export AWS_PROFILE="dev.use1"
+export AWS_DEFAULT_PROFILE="dev.usw2"
+export AWS_PROFILE="dev.usw2"
 export AWS_VAULT_BACKEND=file
 export AWS_SDK_LOAD_CONFIG=true
 
 aws-use() {
   local profile 
-  profile="${3:-"dev.use1"}";
+  profile="${3:-"dev.usw2"}";
 
   export AWS_PROFILE="$profile"
 }

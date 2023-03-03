@@ -1,31 +1,21 @@
 n2ip () {
     local text profile
     text="$1"
-    profile=${2:-"dev.usw2"}
 
-	aws ec2 --profile="$profile" describe-instances --filters "Name=tag:Name,Values=*${text}*" Name=instance-state-name,Values=running | jq -r '.Reservations[].Instances[] | [(.Tags[] | select(.Key == "Name").Value), .NetworkInterfaces[0].PrivateIpAddress, (.InstanceId), (.State.Name), (.Tags[] | select(.Key == "aws:ec2launchtemplate:version").Value), (.LaunchTime)]  | join("\t")'
+	aws ec2 describe-instances --filters "Name=tag:Name,Values=*${text}*" Name=instance-state-name,Values=running | jq -r '.Reservations[].Instances[] | [(.Tags[] | select(.Key == "Name").Value), .NetworkInterfaces[0].PrivateDnsName, (.InstanceId), (.State.Name), (.Tags[] | select(.Key == "aws:ec2launchtemplate:version").Value), (.LaunchTime)]  | join("\t")'
 }
 
 get-asgs () {
     local profile
-    profile=${1:-"dev.usw2"}
     
-	aws autoscaling --profile="$profile" describe-auto-scaling-groups | jq -er '.AutoScalingGroups[].AutoScalingGroupName'
-}
-
-asgterm-all-vault-test-dev-vault-usw2 () {
-    local nodes answer
-    nodes="$(n2ip dev-vault-test dev.usw2)"
-    echo "Terminating nodes:\n$nodes\n"
-    for i in $(echo $nodes | awk '{print $3}'); do asgterm $i; done
+	aws autoscaling describe-auto-scaling-groups | jq -er '.AutoScalingGroups[].AutoScalingGroupName'
 }
 
 asgterm () {
     local instance_id profile
     instance_id="$1"
-    profile=${2:-"dev.usw2"}
 
-    aws autoscaling --profile="$profile" terminate-instance-in-auto-scaling-group --no-should-decrement-desired-capacity --instance-id "$instance_id"
+    aws autoscaling terminate-instance-in-auto-scaling-group --no-should-decrement-desired-capacity --instance-id "$instance_id"
 }
 
 ssl-cert-inspect () { 

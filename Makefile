@@ -9,7 +9,7 @@ hello:
 	@echo "Hello World"
 
 symlink:
-	@echo "Symlinking dotfiles to HOME and/or HOME/.config directories."
+	@echo "\nSymlinking dotfiles to HOME and/or HOME/.config directories."
 
 	ln -sfv "${DOTFILES_DIR}/.editorconfig" ~
 	ln -sfv "${DOTFILES_DIR}/.gitconfig" ~
@@ -18,8 +18,13 @@ symlink:
 	ln -sfv "${DOTFILES_DIR}/.tool-versions" ~
 	ln -sfv "${DOTFILES_DIR}/starship.toml" ~/.config/starship.toml
 
+ifeq ($(GREENHOUSE),true)
+	@echo "\nSymlinking Greenhouse-specific dotfiles"
+	ln -sfv "${DOTFILES_DIR}/.gemrc" ~
+
 	mkdir -p ~/.config/sso-token-cli
 	ln -sfv "${DOTFILES_DIR}/.gh-sso-config" ~/.config/sso-token-cli/config
+endif
 
 brew_install:
 	@echo "Installing brew packages"
