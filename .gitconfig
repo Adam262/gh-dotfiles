@@ -5,16 +5,11 @@
 	capf = !git commit --amend && git push -f	
 	co = checkout
 	cob = !git fetch origin main:main && git checkout -b
-	cof = !git checkout `(git branch | fzf)`
 	com = !git checkout main && git pull --rebase origin main
-	comaster = !git checkout master && git pull --rebase origin master
-	fem = !git fetch origin master
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	pf = !git push -f
-	rem = !git checkout main && git co - && git pull --rebase origin main
-	remaster = !git checkout master && git co - && git pull --rebase origin master
+	rem = !git pull --rebase origin main
 	reim = !git rebase -i main
-	reimaster = !git rebase -i master
 	st = status
 [branch]
 	autosetuprebase = always
