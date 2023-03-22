@@ -35,13 +35,11 @@ autoload -U compinit && compinit -u
 source /usr/local/opt/antidote/share/antidote/antidote.zsh
 source <(antidote init)
 
-antidote bundle zsh-users/zsh-autosuggestions
-antidote bundle zsh-users/zsh-completions
-
 antidote bundle <<EOBUNDLES
-  # Bundle syntax-highlighting
   zsh-users/zsh-syntax-highlighting
-
+  zsh-users/zsh-autosuggestions
+  zsh-users/zsh-completions
+  
   # Bundle OMZ plugins using annotations
   ohmyzsh/ohmyzsh path:plugins/magic-enter
 
@@ -53,6 +51,7 @@ antidote bundle <<EOBUNDLES
   ohmyzsh/ohmyzsh path:plugins/history
   ohmyzsh/ohmyzsh path:plugins/git
   ohmyzsh/ohmyzsh path:plugins/kubectl
+
   # Custom ASDF plugin, see https://github.com/kiurchv/asdf.plugin.zsh
   ohmyzsh/ohmyzsh path:plugins/asdf
 EOBUNDLES
