@@ -24,3 +24,25 @@ ssl-cert-inspect () {
     
     openssl x509 -in "/etc/ssl/certs/${cert-name}" -nout -text
 }
+
+purge-tf () {
+    local infra_services="$HOME/Code/infrastructure/services"
+
+    echo "Purging all '.terraform.lock.hcl' files from $infra_services"
+    for lock in $(find "$infra_services" -name '.terraform.lock.hcl')
+    do
+            rm $lock
+    done
+    
+    echo "Purging all '.terraform' directories from $infra_services"
+    for dir in $(find "$infra_services" -type d -name '.terraform')
+    do
+            rm -rf $dir
+    done
+    
+    echo "Purging all 'plan.*' files from $infra_services"
+    for plan in $(find "$infra_services" -regex '.*plan.*')
+    do
+            rm $plan
+    done
+}
