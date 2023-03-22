@@ -16,44 +16,39 @@ alias aws-logout='export AWS_VAULT="" && aws-vault remove -s support'
 alias aws-sessions='aws-vault list | grep sso'
 
 aws-ssm-set () {
-  local name value profile;
+  local name value;
   name="$1";
   value="$2";
-  profile="${3:-"dev.usw2"}";
 
-  aws ssm put-parameter --name "$name" --type SecureString --value "$value" --profile "$profile" --overwrite
+  aws ssm put-parameter --name "$name" --type SecureString --value "$value" --overwrite
 }
 
 aws-ssm-get () {
-  local name profile;
+  local name;
   name="$1";
-  profile="${2:-"dev.usw2"}";
-  aws ssm get-parameter --name "$name" --profile "$profile" --with-decryption
+  aws ssm get-parameter --name "$name" --with-decryption
 }
 
 aws-ssm-del () {
-  local name profile;
+  local name;
   name="$1";
-  profile="${2:-"dev.usw2"}";
-  aws ssm delete-parameter --name "$name" --profile "$profile"
+  aws ssm delete-parameter --name "$name"
 }
 
 aws-ssm-copy () {
-  local name profile;
+  local name;
   name="$1"
-  profile="${2:-"dev.usw2"}";
 
   # jq -r is needed for raw string output
-  aws-get-ssm $name $profile | jq -r '.Parameter.Value' | pbcopy
+  aws-get-ssm $name | jq -r '.Parameter.Value' | pbcopy
 }
 
 aws-ssm-paste() {
-  local name profile;
+  local name;
   name="$1"
-  profile="${2:-"dev.usw2"}";
 
   # quotes around subshell make sure all whitespace gets preserved as-is
-  aws-ssm-set $name "$(pbpaste)" $profile 
+  aws-ssm-set $name "$(pbpaste)" 
 }
 
 aws-list-profiles() {
