@@ -5,7 +5,7 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "instrumenta/instrumenta"
 tap "raggi/ale"
-brew "antigen"
+brew "antidote"
 brew "asdf", conflicts_with: ["md5sha1sum"]
 brew "autojump"
 brew "awscli"
