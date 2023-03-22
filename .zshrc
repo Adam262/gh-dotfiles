@@ -27,24 +27,35 @@ unsetopt share_history
 unsetopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
 
-source $(brew --prefix)/share/antigen/antigen.zsh
+export ZSH_CACHE_DIR=$HOME/.oh-my-zsh/cache
+mkdir -p $ZSH_CACHE_DIR/completions
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
-
-antigen bundles <<EOBUNDLES
-  command-not-found
-  docker
-  history
-  git
-  kubectl
-  zsh-users/zsh-syntax-highlighting
-  kiurchv/asdf.plugin.zsh
-EOBUNDLES
-
-# Tell Antigen that you're done.
-antigen apply
 autoload -U compinit && compinit -u
+
+source /usr/local/opt/antidote/share/antidote/antidote.zsh
+source <(antidote init)
+
+antidote bundle zsh-users/zsh-autosuggestions
+antidote bundle zsh-users/zsh-completions
+
+antidote bundle <<EOBUNDLES
+  # Bundle syntax-highlighting
+  zsh-users/zsh-syntax-highlighting
+
+  # Bundle OMZ plugins using annotations
+  ohmyzsh/ohmyzsh path:plugins/magic-enter
+
+  # Bundle with a git URL
+  https://github.com/zsh-users/zsh-history-substring-search
+  
+  ohmyzsh/ohmyzsh path:plugins/command-not-found
+  ohmyzsh/ohmyzsh path:plugins/docker
+  ohmyzsh/ohmyzsh path:plugins/history
+  ohmyzsh/ohmyzsh path:plugins/git
+  ohmyzsh/ohmyzsh path:plugins/kubectl
+  # Custom ASDF plugin, see https://github.com/kiurchv/asdf.plugin.zsh
+  ohmyzsh/ohmyzsh path:plugins/asdf
+EOBUNDLES
 
 export GOPRIVATE=github.com/grnhse
 
