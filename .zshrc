@@ -30,7 +30,8 @@ setopt EXTENDED_HISTORY
 export ZSH_CACHE_DIR=$HOME/.oh-my-zsh/cache
 mkdir -p $ZSH_CACHE_DIR/completions
 
-autoload -U compinit && compinit -u
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
 
 source /usr/local/opt/antidote/share/antidote/antidote.zsh
 source <(antidote init)
@@ -102,10 +103,6 @@ eval "$(direnv hook zsh)"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
-if [[ -f "$HOME/.asdf/asdf.sh" ]] then
-  source "$HOME/.asdf/asdf.sh"
-  source "$HOME/.asdf/completions/asdf.bash"
-fi
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 
 export GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)";
