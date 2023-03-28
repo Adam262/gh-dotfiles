@@ -8,6 +8,8 @@
 	com = !git checkout main && git pull --rebase origin main
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	pf = !git push -f
+	rc = !git rebase --continue
+	ra = !git rebase --abort
 	rem = !git pull --rebase origin main
 	reim = !git rebase -i main
 	st = status
@@ -25,6 +27,8 @@
 	defaultBranch = main
 [merge]
 	tool = vimdiff
+[pull]
+  rebase = true
 [push]
 	default = current
   autoSetupRemote = true
