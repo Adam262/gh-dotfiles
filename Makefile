@@ -14,8 +14,8 @@ symlink:
 	ln -sfv "${DOTFILES_DIR}/.editorconfig" ~
 	ln -sfv "${DOTFILES_DIR}/.gitconfig" ~
 	ln -sfv "${DOTFILES_DIR}/.gitignore" ~
-	ln -sfv "${DOTFILES_DIR}/.zshrc" ~
 	ln -sfv "${DOTFILES_DIR}/.tool-versions" ~
+	ln -sfv "${DOTFILES_DIR}/.zshrc" ~
 	ln -sfv "${DOTFILES_DIR}/starship.toml" ~/.config/starship.toml
 
 ifeq ($(GREENHOUSE),true)

@@ -23,6 +23,7 @@ The install script will:
   * `$HOME/.editorconfig         -> .dotfiles/.editorconfig`
   * `$HOME/.gitconfig            -> .dotfiles/.gitconfig`
   * `$HOME/.gitignore            -> .dotfiles/.gitignore`
+  * `$HOME/.tool-versions        -> .dotfiles/.tool-versions`
   * `$HOME/.zshrc                -> .dotfiles/.zshrc`
   * `$HOME/.config/starship.toml -> .dotfiles/starship.toml`
 

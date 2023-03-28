@@ -1,5 +1,4 @@
 export DOTFILES_DIR="$HOME/.dotfiles"
-test -e "$DOTFILES_DIR/.awsrc" && source "$DOTFILES_DIR/.awsrc"
 test -e "$DOTFILES_DIR/.secretsrc" && source "$DOTFILES_DIR/.secretsrc"
 
 test -e "$HOME/.autojump/etc/profile.d/autojump.sh"  && source "$HOME/.autojump/etc/profile.d/autojump.sh"
