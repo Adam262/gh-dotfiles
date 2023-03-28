@@ -7,7 +7,7 @@ export AWS_SDK_LOAD_CONFIG=true
 
 aws-use() {
   local profile 
-  profile="${3:-"dev.usw2"}";
+  profile="${1:-dev.usw2}";
 
   export AWS_PROFILE="$profile"
 }
