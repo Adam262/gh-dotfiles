@@ -8,7 +8,7 @@ Dotfiles for setting up a new Mac running 10.15+
 
 `make brew_install`
 
-The install script will:
+This target will:
 
 * install the Homebrew package manager
 * install the Xcode CLI
@@ -16,19 +16,20 @@ The install script will:
 
 `make symlink`
 
-The install script will:
+This target will create symlinks to the below config files:
 
-* create symlinks to the below config files. The script will overwrite any existing files or symlinks in the listed directory. Note you will need to open a new terminal tab or `source ~/.zshrc`
+* `$HOME/.editorconfig         -> .dotfiles/.editorconfig`
+* `$HOME/.gitconfig            -> .dotfiles/.gitconfig`
+* `$HOME/.gitignore            -> .dotfiles/.gitignore`
+* `$HOME/.tool-versions        -> .dotfiles/.tool-versions`
+* `$HOME/.zshrc                -> .dotfiles/.zshrc`
+* `$HOME/.config/starship.toml -> .dotfiles/starship.toml`
 
-  * `$HOME/.editorconfig         -> .dotfiles/.editorconfig`
-  * `$HOME/.gitconfig            -> .dotfiles/.gitconfig`
-  * `$HOME/.gitignore            -> .dotfiles/.gitignore`
-  * `$HOME/.tool-versions        -> .dotfiles/.tool-versions`
-  * `$HOME/.zshrc                -> .dotfiles/.zshrc`
-  * `$HOME/.config/starship.toml -> .dotfiles/starship.toml`
+Note that the target will overwrite any existing files or symlinks in the listed directory.
 
-### To Do
+### Greenhouuse
 
-* Allow multiple Brewfiles with a common ancestor
-* Prompt to generate or lookup SSH config
-* Add /etc/timezone
+You can do Greenhouse-specific setup via two options:
+
+* `source-zsh true`. This command sources `.zshrc` with some additional Greenhouse utils
+* `make symlink GREENHOUSE=true` This target sets a additional Greenhouse-specific symlinks in addition to the default ones
