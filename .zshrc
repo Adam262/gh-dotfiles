@@ -3,9 +3,6 @@ test -e "$DOTFILES_DIR/.secretsrc" && source "$DOTFILES_DIR/.secretsrc"
 
 test -e "$HOME/.autojump/etc/profile.d/autojump.sh"  && source "$HOME/.autojump/etc/profile.d/autojump.sh"
 
-# Uncomment for Greenhouse utils
-# source gh_utils/.greenhouse
-
 for util in $(ls -a "$DOTFILES_DIR/utils"); do
   source "$DOTFILES_DIR/utils/$util"
 done
@@ -111,5 +108,14 @@ for bindir in ${GNUBINS[@]}; do
 done;
 
 function source-zsh {
+  local source_gh
+  source_gh="$1"
+
+  if [[ -n "$source_gh" ]]; then 
+    echo "Sourcing greenhouse utils"
+    source "$(pwd)/gh_utils/.greenhouse"
+  fi
+
+  echo "sourcing ~/.zshrc"
   source "$HOME/.zshrc"
 }
