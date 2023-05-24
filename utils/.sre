@@ -25,7 +25,7 @@ ssl-cert-inspect () {
     openssl x509 -in "/etc/ssl/certs/${cert-name}" -nout -text
 }
 
-purge-tf () {
+prune-tf () {
     local infra_services="$HOME/Code/infrastructure/services"
 
     echo "Purging all '.terraform.lock.hcl' files from $infra_services"

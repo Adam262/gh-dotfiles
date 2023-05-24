@@ -113,7 +113,7 @@ function source-zsh {
 
   if [[ -n "$source_gh" ]]; then 
     echo "Sourcing greenhouse utils"
-    source "$(pwd)/gh_utils/.greenhouse"
+    source "$HOME/.dotfiles/gh_utils/.greenhouse"
   fi
 
   echo "sourcing ~/.zshrc"

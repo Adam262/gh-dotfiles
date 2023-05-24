@@ -1,7 +1,5 @@
-# use via aws-vault exec support <my command>
-
+# Per GH Cloud Platform, it is highly recommended to not set $AWS_PROFILE in your shell config. Many tools utilize the concept of the default profile. By explictly setting your profile in every shell, the default will never be used. In other words: $AWS_DEFAULT_PROFILE is for setting you "default" profile and $AWS_PROFILE is for explicitly setting it per-session/command.
 export AWS_DEFAULT_PROFILE="dev.usw2"
-export AWS_PROFILE="dev.usw2"
 export AWS_VAULT_BACKEND=file
 export AWS_SDK_LOAD_CONFIG=true
 
