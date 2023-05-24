@@ -1,23 +1,24 @@
-function git-prune-branches () {
+function prune-git-branches () {
   local branch_name=$1
 
   git br | grep $branch_name | xargs -I % sh -c 'git br -D %'
 }
 
 function git-pr-create() {
-  local branch branch_items card
+  local reviewer branch branch_items card
+  reviewer="${1:-grnhse/cloud-platform}"
 
   branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
   branch_items=($(echo $branch | tr "-" "\n"))
   card="${branch_items[1]}-${branch_items[2]}"
 
-  gh pr create -t "$branch" -b "https://greenhouseio.atlassian.net/browse/$card" "$@"
+  gh pr create -t "$branch" -b "https://greenhouseio.atlassian.net/browse/$card" -r "$reviewer" "$@"
   gh pr view --web
 }
 
 function git-pr-list() {
   local author
-  author="${author:-@me}"
+  author="${1:-@me}"
 
   gh pr list --author @me -w
 }
