@@ -1,18 +1,22 @@
 n2ip () {
-    local text profile
+    local text
     text="$1"
 
 	aws ec2 describe-instances --filters "Name=tag:Name,Values=*${text}*" Name=instance-state-name,Values=running | jq -r '.Reservations[].Instances[] | [(.Tags[] | select(.Key == "Name").Value), .NetworkInterfaces[0].PrivateDnsName, (.InstanceId), (.State.Name), (.Tags[] | select(.Key == "aws:ec2launchtemplate:version").Value), (.LaunchTime)]  | join("\t")'
 }
 
-get-asgs () {
-    local profile
-    
-	aws autoscaling describe-auto-scaling-groups | jq -er '.AutoScalingGroups[].AutoScalingGroupName'
-}
+k-get-nodes () {
+  local context
+  context="${1:-dev.usw2}"
+
+  for node in $(kubectl get no -l node-role.kubernetes.io/worker= -oname --context="$context" \
+  | cut -d/ -f2); do printf "%s\t" "$node"; kubectl describe no $node --context="$context" \
+  | awk '/Allocated/,/cpu/' \
+  | grep cpu; done
+} 
 
 asgterm () {
-    local instance_id profile
+    local instance_id
     instance_id="$1"
 
     aws autoscaling terminate-instance-in-auto-scaling-group --no-should-decrement-desired-capacity --instance-id "$instance_id"
@@ -46,3 +50,46 @@ prune-tf () {
             rm $plan
     done
 }
+
+to_local(){
+  echo "Moving state to local"
+  if mv _state.tf _state.tf.local; then
+    echo "Done"
+    return 0
+  else
+    echo "Failed"
+    return 1
+  fi
+}
+
+to_remote(){
+  echo "Moving state to remote"
+  if mv _state.tf.local _state.tf; then
+    echo "Done"
+    return 0
+  else
+    echo "Failed"
+    return 1
+  fi
+}
+
+flipstate(){
+  if [[ $# -eq 1 ]]; then
+    case "$1" in
+      local)
+        to_local
+      ;;
+      remote)
+        to_remote
+      ;;
+    esac
+  else
+    if [[ -f "_state.tf" ]]; then
+      to_local
+    else
+      to_remote
+    fi
+  fi
+}
+
+alias sops="EDITOR='subl -w' sops" 

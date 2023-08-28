@@ -1,1 +1,10 @@
+#!/usr/bin/env zsh    
 alias a='argo -n argo'
+
+argocd-login () {
+  local cluster
+  cluster="${1:-dev.usw2}"
+  echo "Logging into ArgoCD on $cluster"
+
+  argocd login --sso "cd.$cluster.gh.internal" --name "$cluster"  
+} 

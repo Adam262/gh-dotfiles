@@ -52,4 +52,11 @@ aws-ssm-paste() {
 aws-list-profiles() {
    aws configure list-profiles | grep -v vaulted-
 }
+
+aws-ecr-login() {
+  local registry
+  registry="${1:-631819134151.dkr.ecr.us-east-1.amazonaws.com}";
+
+  AWS_PROFILE="bastion.use1" aws ecr get-login-password | docker login --username AWS --password-stdin "$registry"
+}
  

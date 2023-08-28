@@ -5,7 +5,7 @@ aws-vault 6.6.0
 buildpack 0.28.0
 gcloud 415.0.0
 golang 1.19
-helm 3.11.0
+helm 3.12.0
 kind 0.17.0
 kubectl 1.26.1
 kubebuilder 3.9.0
