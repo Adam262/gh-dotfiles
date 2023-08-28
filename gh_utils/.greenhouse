@@ -5,8 +5,8 @@ eval "$(pipelinectl completion zsh)"
 # ps xa | grep -e dajoku -e sso-token-cli
 export SSO_TOKEN_CLI_CONFIG="/Users/adam.barcan/.config/sso-token-cli/config"
 
-alias logclide="logcli --addr https://dev-loki-green.dev.use1.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
-alias logclidw="logcli --addr https://dev-loki-green.dev.usw2.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
+# alias logclide="logcli --addr https://dev-loki-green.dev.use1.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
+# alias logclidw="logcli --addr https://dev-loki-green.dev.usw2.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
 
 # Sample queries
 # logclidw query '{namespace="dajoku", dajoku_application="lotus"}' --tail --since 48h --no-labels

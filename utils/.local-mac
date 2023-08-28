@@ -8,3 +8,7 @@ is-localhost-port-open() {
     
     nmap 127.0.0.1 -p "$port"
 }
+
+alias "..2"="cd ../.."
+alias "..3"="cd ../../.."
+alias "..4"="cd ../../../.."
