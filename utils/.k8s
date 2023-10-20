@@ -39,5 +39,5 @@ function k8s-prune () {
 }
 
 function kc-use () {
-  kc use $(kc get-contexts | awk '{print $1}' | fzf)
+  kc use $(kc get-contexts | awk '{print $1}' | grep -vE '(CURRENT|\*)' | fzf)
 }

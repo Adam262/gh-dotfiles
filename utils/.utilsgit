@@ -5,14 +5,18 @@ function prune-git-branches () {
 }
 
 function git-pr-create() {
-  local branch branch_items card
+  local branch branch_items card body_file
 
   branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
   branch_items=($(echo $branch | tr "-" "\n"))
   card="${branch_items[1]}-${branch_items[2]}"
+  body_file="/tmp/${card}-body.txt"
+  cat ~/Code/infrastructure/.github/pull_request_template.md | sed -e "s/JIRA-1234/$card/g" >  "/tmp/${card}-body.txt"
 
-  gh pr create -t "$branch" -b "https://greenhouseio.atlassian.net/browse/$card" "$@"
+  gh pr create -t "$branch" -F "${body_file}" "$@"
   gh pr view --web
+
+  rm "${body_file}"
 }
 
 function git-pr-list() {
