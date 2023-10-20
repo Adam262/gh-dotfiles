@@ -1,4 +1,6 @@
 export DOTFILES_DIR="$HOME/.dotfiles"
+export ASDF_DIR="$HOME/.asdf"
+
 test -e "$DOTFILES_DIR/.secretsrc" && source "$DOTFILES_DIR/.secretsrc"
 
 test -e "$HOME/.autojump/etc/profile.d/autojump.sh"  && source "$HOME/.autojump/etc/profile.d/autojump.sh"
@@ -26,11 +28,11 @@ setopt EXTENDED_HISTORY
 export ZSH_CACHE_DIR=$HOME/.oh-my-zsh/cache
 mkdir -p $ZSH_CACHE_DIR/completions
 
+source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+source <(antidote init)
+
 autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit && compinit
-
-source /usr/local/opt/antidote/share/antidote/antidote.zsh
-source <(antidote init)
 
 antidote bundle <<EOBUNDLES
   zsh-users/zsh-syntax-highlighting
@@ -48,11 +50,9 @@ antidote bundle <<EOBUNDLES
   ohmyzsh/ohmyzsh path:plugins/history
   ohmyzsh/ohmyzsh path:plugins/git
   ohmyzsh/ohmyzsh path:plugins/kubectl
-
-  # Custom ASDF plugin, see https://github.com/kiurchv/asdf.plugin.zsh
-  ohmyzsh/ohmyzsh path:plugins/asdf
 EOBUNDLES
 
+export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 export GOPRIVATE=github.com/grnhse
 
 export PATH="$PATH:$HOME/bin"
@@ -69,6 +69,9 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
+
+export ASDF_HASHICORP_OVERWRITE_ARCH=amd64
+export ASDF_KUBECTL_OVERWRITE_ARCH=amd64
 
 export EDITOR='code -w'
 export BUNDLER_EDITOR='code -w'
@@ -90,18 +93,21 @@ function ngrok-localhost {
   cd && ngrok http "http://localhost:$1" -subdomain=wuta
 }
 
+eval "$(jump shell)"
 eval "$(kubectl completion zsh)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
-. "$(pack completion --shell zsh)"
 . <(stern --completion=zsh)
+. "$HOME/.asdf/asdf.sh"
+fpath=($HOME/.asdf/completions $fpath)
+. "$(pack completion --shell zsh)"
 
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 
-export GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)";
+# export GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)";
 
 for bindir in ${GNUBINS[@]}; do
   export PATH=$bindir:$PATH;
@@ -119,3 +125,5 @@ function source-zsh {
   echo "sourcing ~/.zshrc"
   source "$HOME/.zshrc"
 }
+
+source set-aws-profile dev.usw2

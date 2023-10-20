@@ -11,6 +11,7 @@ hello:
 symlink:
 	@echo "\nSymlinking dotfiles to HOME and/or HOME/.config directories."
 
+	ln -sfv "${DOTFILES_DIR}/.asdfrc" ~
 	ln -sfv "${DOTFILES_DIR}/.editorconfig" ~
 	ln -sfv "${DOTFILES_DIR}/.gitconfig" ~
 	ln -sfv "${DOTFILES_DIR}/.gitignore" ~

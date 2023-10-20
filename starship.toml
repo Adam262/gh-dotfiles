@@ -1,10 +1,11 @@
 format = """\
+  [](#9A348E)\
 	$username\
 	$directory\
 	$git_branch\
 	$line_break\
-	$aws\
 	$kubernetes\
+	$aws\
 	$character\
 	$line_break\
 """
