@@ -59,4 +59,12 @@ aws-ecr-login() {
 
   AWS_PROFILE="bastion.use1" aws ecr get-login-password | docker login --username AWS --password-stdin "$registry"
 }
- 
+
+aws-irsa-assume-role() {
+  local web_identity_token role_arn
+  
+  web_identity_token="$1"
+  role_arn="$2"
+
+  aws sts assume-role-with-web-identity --web-identity-token="${web_identity_token}" --role-arn="${role_arn}" --role-session-name=foo
+}
