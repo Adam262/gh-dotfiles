@@ -69,6 +69,7 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 export ASDF_HASHICORP_OVERWRITE_ARCH=amd64
 export ASDF_KUBECTL_OVERWRITE_ARCH=amd64
