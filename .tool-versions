@@ -18,3 +18,4 @@ tanka 0.24.0
 terraform 1.3.7 
 vault 1.12.2
 yj 5.1.0
+yq v4.40.5
