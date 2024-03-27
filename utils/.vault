@@ -2,7 +2,7 @@ vault-bootstrap() {
   rm -rf $HOME/.dotfiles/data/vault
 
   mkdir -p $HOME/.dotfiles/data/vault
-  vault server -config=/Users/adam.barcan/.dotfiles/vault-config.hcl
+  vault server -config=/Users/adam/.dotfiles/vault-config.hcl
 }
 
 vault-init-unseal() {

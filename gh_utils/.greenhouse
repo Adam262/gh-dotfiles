@@ -3,7 +3,7 @@ eval "$(pipelinectl completion zsh)"
 # sometimes sso token cli hangs because there are multiple of it holding port 54321 open
 # fix is to run below and kill process
 # ps xa | grep -e dajoku -e sso-token-cli
-export SSO_TOKEN_CLI_CONFIG="/Users/adam.barcan/.config/sso-token-cli/config"
+export SSO_TOKEN_CLI_CONFIG="/Users/adam/.config/sso-token-cli/config"
 
 # alias logclide="logcli --addr https://dev-loki-green.dev.use1.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"
 # alias logclidw="logcli --addr https://dev-loki-green.dev.usw2.gh.internal --bearer-token=$(sso-token-cli -e loki.dev)"

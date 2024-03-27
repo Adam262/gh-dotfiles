@@ -1,6 +1,7 @@
 argo 3.4.0  
 argocd 2.5.10
 awscli 2.9.20
+aws-vault 6.6.0
 buildpack 0.28.0
 gcloud 415.0.0
 golang 1.19

@@ -127,4 +127,7 @@ function source-zsh {
   source "$HOME/.zshrc"
 }
 
-source set-aws-profile dev.usw2
+source set-aws-profile dev.use2
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

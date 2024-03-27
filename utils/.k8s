@@ -15,7 +15,10 @@ alias ks='kubectl -n security'
 # kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
 
 function k8s-debug () {
-  k run -it --rm --labels "consumer=adam,app=debug-tools" --image gcr.io/gh-infra/debug-tools "kdebug-adam-$(openssl rand -hex 4)" -- bash
+  local ns
+  ns="${1:-default}"
+  
+  k run -it --rm --labels "consumer=adam,app=debug-tools" --image gcr.io/gh-infra/debug-tools "kdebug-adam-$(openssl rand -hex 4)" --namespace "$ns" -- bash
 }
 
 function k8s-decode-secret() {
