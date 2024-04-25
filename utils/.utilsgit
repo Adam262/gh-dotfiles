@@ -18,10 +18,3 @@ function git-pr-create() {
 
   rm "${body_file}"
 }
-
-function git-pr-list() {
-  local author
-  author="${1:-@me}"
-
-  gh pr list --author @me -w
-}

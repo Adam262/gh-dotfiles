@@ -51,45 +51,4 @@ prune-tf () {
     done
 }
 
-to_local(){
-  echo "Moving state to local"
-  if mv _state.tf _state.tf.local; then
-    echo "Done"
-    return 0
-  else
-    echo "Failed"
-    return 1
-  fi
-}
-
-to_remote(){
-  echo "Moving state to remote"
-  if mv _state.tf.local _state.tf; then
-    echo "Done"
-    return 0
-  else
-    echo "Failed"
-    return 1
-  fi
-}
-
-flipstate(){
-  if [[ $# -eq 1 ]]; then
-    case "$1" in
-      local)
-        to_local
-      ;;
-      remote)
-        to_remote
-      ;;
-    esac
-  else
-    if [[ -f "_state.tf" ]]; then
-      to_local
-    else
-      to_remote
-    fi
-  fi
-}
-
 alias sops="EDITOR='subl -w' sops" 

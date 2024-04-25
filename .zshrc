@@ -102,26 +102,13 @@ eval "$(direnv hook zsh)"
 . "$HOME/.asdf/asdf.sh"
 fpath=($HOME/.asdf/completions $fpath)
 . "$(pack completion --shell zsh)"
-
-# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+fpath=($fpath ~/.zsh/completion)
 
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
-
-# export GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)";
-
-for bindir in ${GNUBINS[@]}; do
-  export PATH=$bindir:$PATH;
-done;
 
 function source-zsh {
   local source_gh
   source_gh="$1"
-
-  if [[ -n "$source_gh" ]]; then 
-    echo "Sourcing greenhouse utils"
-    source "$HOME/.dotfiles/gh_utils/.greenhouse"
-  fi
 
   echo "sourcing ~/.zshrc"
   source "$HOME/.zshrc"

@@ -2,31 +2,13 @@
 
 alias k='kubectl'
 alias kc='kubectl config'
-
 alias ka='kubectl -n argo'
-alias kd='kubectl -n dajoku'
-alias kks='kubectl -n kube-system'
-alias ks='kubectl -n security'
-
-
-# Sample usage
-# kdebug --context prod.use1 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-greenhouse"')"
-# kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
-# kdebug --context dev.usw2 --overrides "$(jq -n '.metadata.annotations["iam.amazonaws.com/role"] = "dajoku-api-support"')"
 
 function k8s-debug () {
   local ns
   ns="${1:-default}"
   
   k run -it --rm --labels "consumer=adam,app=debug-tools" --image gcr.io/gh-infra/debug-tools "kdebug-adam-$(openssl rand -hex 4)" --namespace "$ns" -- bash
-}
-
-function k8s-decode-secret() {
-  local secret_name=$1
-  local secret_key=${2:-"dajoku_auth_token"}
-  local namespace=${3:-"dajoku"}
-
-  kubectl -n $namespace get secrets $secret_name -o=jsonpath="{.data.$secret_key}" | base64 --decode;
 }
 
 function k8s-prune () {
