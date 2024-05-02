@@ -31,6 +31,7 @@ mkdir -p $ZSH_CACHE_DIR/completions
 source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
 source <(antidote init)
 
+fpath+=~/.zfunc
 autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit && compinit
 
@@ -101,8 +102,15 @@ eval "$(direnv hook zsh)"
 . <(stern --completion=zsh)
 . "$HOME/.asdf/asdf.sh"
 fpath=($HOME/.asdf/completions $fpath)
+<<<<<<< Updated upstream
 . "$(pack completion --shell zsh)"
 fpath=($fpath ~/.zsh/completion)
+=======
+# . "$(pack completion --shell zsh)"
+
+# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+>>>>>>> Stashed changes
 
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 
@@ -110,11 +118,23 @@ function source-zsh {
   local source_gh
   source_gh="$1"
 
+<<<<<<< Updated upstream
+=======
+  if [[ -n "$source_gh" ]]; then 
+    echo "Sourcing greenhouse utils"
+    source "$HOME/.dotfiles/gh_utils/.greenhouse"
+    source set-aws-profile dev.usw2
+  fi
+
+>>>>>>> Stashed changes
   echo "sourcing ~/.zshrc"
   source "$HOME/.zshrc"
 }
 
+<<<<<<< Updated upstream
 source set-aws-profile dev.use2
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+=======
+>>>>>>> Stashed changes
