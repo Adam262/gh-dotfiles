@@ -20,14 +20,6 @@ else
 	fi
 fi
 
-# Check for homebrew/cask
-if brew tap | grep "^homebrew/cask$" > /dev/null 2>&1 ; then 
-	echo "Homebrew Cask already installed"
-else
-	echo "Installing Homebrew Cask..."
-	brew tap homebrew/cask
-fi
-
 # Check for Mac App Store CLI
 if brew info mas > /dev/null 2>&1 ; then
 	echo "Mac App Store CLI already installed"
