@@ -1,7 +1,7 @@
 DOTFILES_DIR = "${HOME}/.dotfiles"
 DEBUG ?=  false
 
-.PHONY: hello symlink brew_install asdf_install
+.PHONY: hello symlink brew_install asdf_install krew_install
 
 all: symlink brew_install asdf_install
 
@@ -28,3 +28,7 @@ brew_install:
 asdf_install:
 	@echo "Installing asdf plugins and packages"
 	DEBUG=${DEBUG} "${DOTFILES_DIR}/scripts/asdf_install"
+
+krew_install:
+	@echo "Installing krew plugins"
+	DEBUG=${DEBUG} kubectl krew install < "${DOTFILES_DIR}/krew-plugins.txt"
