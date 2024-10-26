@@ -26,10 +26,3 @@ This target will create symlinks to the below config files:
 * `$HOME/.config/starship.toml -> .dotfiles/starship.toml`
 
 Note that the target will overwrite any existing files or symlinks in the listed directory.
-
-### Greenhouuse
-
-You can do Greenhouse-specific setup via two options:
-
-* `source-zsh true`. This command sources `.zshrc` with some additional Greenhouse utils
-* `make symlink GREENHOUSE=true` This target sets a additional Greenhouse-specific symlinks in addition to the default ones

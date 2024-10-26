@@ -19,10 +19,3 @@ function k8s-prune () {
   echo "namespace: $namespace"
   kubectl get $resource -n $namespace | grep $name_substring | grep -v Running | awk '{ print $1 }' | xargs -I % sh -c "kubectl -n $namespace delete $resource %"
 }
-<<<<<<< HEAD
-=======
-
-function kc-use () {
-  kc use $(kc get-contexts | awk '{print $1}' | grep -vE '(CURRENT|\*)' | fzf)
-}
->>>>>>> 259ff0d (Improve k8s, aws aliases)
