@@ -31,4 +31,4 @@ asdf_install:
 
 krew_install:
 	@echo "Installing krew plugins"
-	DEBUG=${DEBUG} kubectl krew install < "${DOTFILES_DIR}/krew-plugins.txt"
+	DEBUG=${DEBUG} "${DOTFILES_DIR}/scripts/krew_install"
