@@ -7,7 +7,7 @@ n2ip () {
 
 k-get-nodes () {
   local context
-  context="${1:-dev.usw2}"
+  context="$1"
 
   for node in $(kubectl get no -l node-role.kubernetes.io/worker= -oname --context="$context" \
   | cut -d/ -f2); do printf "%s\t" "$node"; kubectl describe no $node --context="$context" \
@@ -30,25 +30,23 @@ ssl-cert-inspect () {
 }
 
 prune-tf () {
-    local infra_services="$HOME/Code/infrastructure/services"
+    local terraform_repo="$1"
 
-    echo "Purging all '.terraform.lock.hcl' files from $infra_services"
-    for lock in $(find "$infra_services" -name '.terraform.lock.hcl')
+    echo "Purging all '.terraform.lock.hcl' files from $terraform_repo"
+    for lock in $(find "$terraform_repo" -name '.terraform.lock.hcl')
     do
             rm $lock
     done
     
-    echo "Purging all '.terraform' directories from $infra_services"
-    for dir in $(find "$infra_services" -type d -name '.terraform')
+    echo "Purging all '.terraform' directories from $terraform_repo"
+    for dir in $(find "$terraform_repo" -type d -name '.terraform')
     do
             rm -rf $dir
     done
     
-    echo "Purging all 'plan.*' files from $infra_services"
-    for plan in $(find "$infra_services" -regex '.*plan.*')
+    echo "Purging all 'plan.*' files from $terraform_repo"
+    for plan in $(find "$terraform_repo" -regex '.*plan.*')
     do
             rm $plan
     done
 }
-
-alias sops="EDITOR='subl -w' sops" 

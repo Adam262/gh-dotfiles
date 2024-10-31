@@ -54,17 +54,11 @@ antidote bundle <<EOBUNDLES
 EOBUNDLES
 
 export ASDF_GOLANG_MOD_VERSION_ENABLED=true
-export GOPRIVATE=github.com/grnhse
-
 export PATH="$PATH:$HOME/bin"
 export PATH=/usr/local/bin:$PATH
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.dajoku-cli/bin"
-export PATH="$PATH:$HOME/Code/dajoku-api/bin"
-export PATH="$PATH:$HOME/Code/dajoku_cli/bin"
-export PATH="$PATH:$HOME/Code/infrastructure/bin"
-export PATH="$PATH:$HOME/Code/onboarding/bin"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
@@ -82,14 +76,10 @@ export KUBE_EDITOR='subl -w'
 export RACK_TIMEOUT=120
 export UNICORN_TIMEOUT=1000
 
-alias be='bundle exec'
 alias source_zsh='source ~/.zshrc'
 
 alias la='ls -a'
 alias pboard_reset="ps aux | grep pboard | grep -v grep | awk '{ print $2 }' | xargs kill"
-
-alias dj='BUNDLE_GEMFILE=~/Code/dajoku_cli/Gemfile bundle exec ruby -I ~/Code/dajoku_cli/lib ~/Code/dajoku_cli/bin/dajoku'
-alias le="local/exec $1"
 
 function ngrok-localhost {
   cd && ngrok http "http://localhost:$1" -subdomain=wuta
@@ -114,8 +104,6 @@ function source-zsh {
   echo "sourcing ~/.zshrc"
   source "$HOME/.zshrc"
 }
-
-source set-aws-profile dev.use2
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 

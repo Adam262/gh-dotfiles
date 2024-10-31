@@ -11,7 +11,6 @@ function git-pr-create() {
   branch_items=($(echo $branch | tr "-" "\n"))
   card="${branch_items[1]}-${branch_items[2]}"
   body_file="/tmp/${card}-body.txt"
-  cat ~/Code/infrastructure/.github/pull_request_template.md | sed -e "s/JIRA-1234/$card/g" >  "/tmp/${card}-body.txt"
 
   gh pr create -t "$branch" -F "${body_file}" "$@"
   gh pr view --web

@@ -1,9 +1,9 @@
-export AWS_DEFAULT_PROFILE="dev.usw2"
+export AWS_DEFAULT_PROFILE=""
 export AWS_SDK_LOAD_CONFIG=true
 
 aws-use() {
   local profile 
-  profile="${1:-dev.usw2}";
+  profile="$1";
 
   export AWS_PROFILE="$profile"
 }
@@ -46,13 +46,6 @@ aws-ssm-paste() {
 
 aws-list-profiles() {
    aws configure list-profiles | grep -v vaulted-
-}
-
-aws-ecr-login() {
-  local registry
-  registry="${1:-631819134151.dkr.ecr.us-east-1.amazonaws.com}";
-
-  AWS_PROFILE="bastion.use1" aws ecr get-login-password | docker login --username AWS --password-stdin "$registry"
 }
 
 aws-irsa-assume-role() {
