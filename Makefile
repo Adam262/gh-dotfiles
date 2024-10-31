@@ -3,7 +3,7 @@ DEBUG ?=  false
 
 .PHONY: hello symlink brew_install asdf_install krew_install
 
-all: symlink brew_install asdf_install
+all: symlink brew_install asdf_install krew_install
 
 hello:
 	@echo "Hello World"
