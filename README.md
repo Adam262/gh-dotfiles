@@ -1,6 +1,6 @@
 ### Overview
 
-Dotfiles for setting up a new Mac running 10.15+
+Dotfiles for provisioning my coding environment on MacOS
 
 ### Setup
 
